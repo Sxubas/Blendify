@@ -27,7 +27,8 @@ class Profile extends Component {
             <i className='material-icons nav-user-avatar' title={this.props.user.display_name}>
               account_box
             </i>}
-          <span>{this.props.user.display_name}</span>
+          <span>{this.props.user.display_name}</span>          
+          <button className='btn black' onClick={() => Meteor.logout()}>Log out</button>
           <h3>history</h3>
           {this.renderHistory()}
         </div> : null
