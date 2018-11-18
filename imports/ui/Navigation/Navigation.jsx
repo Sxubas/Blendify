@@ -20,6 +20,7 @@ class Navigation extends Component {
               <a href='/'><img src='/assets/logo.png'></img></a>
               <div>
                 <h1 onClick={() => FlowRouter.go('home')}>Blendify</h1>
+                <h2>Instant shared playlists</h2>
               </div>
             </div>
             <a className={FlowRouter.getRouteName() === 'home' ? 'nav-item selected' : 'nav-item'} href='/'>
@@ -53,7 +54,9 @@ class Navigation extends Component {
                   <i className='nav-user-avatar material-icons' title={this.props.user.profile.display_name}>
                     account_box
                   </i>}
-                <span>{this.props.user.profile.display_name}</span>
+                <span className={FlowRouter.getRouteName() === 'profile' && 'selected'}>
+                  {this.props.user.profile.display_name}
+                </span>
               </a>
             </div>}
         </nav>
