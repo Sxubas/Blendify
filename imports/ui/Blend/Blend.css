@@ -20,8 +20,7 @@
 }
 
 .blend-title-image{
-  height: 230px;
-  width: 230px;
+  padding-top: 100%;
   background-size: cover;
   font-size: 230px;
 }

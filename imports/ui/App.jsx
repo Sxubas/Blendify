@@ -6,8 +6,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import LandingPage from './LandingPage/LandingPage.jsx';
 import Navigation from './Navigation/Navigation.jsx';
 
-
 import './App.css';
+import './App.mobile.css';
 
 class App extends React.Component {
 

@@ -46,10 +46,14 @@ nav img{
   font-weight: 600;
   margin: 16px 0;
   color: rgb(194, 194, 194);
-  transition: all 0.2s linear;
+  transition: all 66ms linear;
 }
 
-.selected{
+.nav-item.selected{
+  color: #1ed760;
+}
+
+.nav-item.selected:hover{
   color: #1ed760;
 }
 

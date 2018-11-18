@@ -1,0 +1,16 @@
+
+@media only screen and (max-width: 600px) {
+
+  .recent-blend-container{
+    width: 144px;
+  }
+
+  .recent-blend-container .blend-cover-art{
+    padding-top: 100%;
+    background-size: cover;
+  }
+
+  .blend-cover-icon{
+    font-size: 144px !important;
+  }
+}

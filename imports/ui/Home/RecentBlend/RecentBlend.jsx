@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+
 import './RecentBlend.css';
+import './RecentBlend.mobile.css';
 
 class RecentBlend extends React.Component{
 
@@ -17,15 +19,25 @@ class RecentBlend extends React.Component{
 
   render() {
     return (
-      <div tabIndex='0' aria-label='go to blend' title='go to blend' className='recent-blend-container' onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}>
+      <div 
+        tabIndex='0'
+        aria-label='go to blend'
+        title='go to blend' 
+        className='recent-blend-container' 
+      >
         {(this.props.blend.images && this.props.blend.images.length > 0) ||
           (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
-          <img src={this.getImageSrc(this.props.blend)} className='blend-title-image' alt="Playlist image" /> :
-          <i className='material-icons blend-title-image'>photo</i>
+          <div 
+            style={{ backgroundImage : `url(${this.getImageSrc(this.props.blend)})`}} 
+            className='blend-cover-art' 
+            alt="Playlist album covers" 
+            onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}/> :
+          <i 
+            className='material-icons blend-cover-icon' 
+            onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}> photo</i>
         }
-        <h4>{this.props.blend.name}</h4>
+        <a className='blend-name' href={`/blend/${this.props.blend.code}`}>{this.props.blend.name}</a>
         <p>Created by <a href={`/profile/${this.props.blend.owner.id}`}>{this.props.blend.owner.display_name}</a></p>
-        {this.props.blend.description && <p>{this.props.blend.description}</p>}
       </div>
     );
   }

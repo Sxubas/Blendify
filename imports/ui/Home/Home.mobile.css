@@ -1,10 +1,14 @@
 
 @media only screen and (max-width: 600px) {
   .home-container{
+    height: auto;
+    margin-bottom: 54px;
+    padding-bottom: 0;
   }
 
-  .title-logo-container{
-    display: none; /*Mobile navigation should not have logo to go home*/
-    /* TODO: Use div instead of img to improve performance */
+  .recent-blends-container{
+    min-width: 100%;
+    padding: 0 2px;
+    overflow: auto;
   }
 }

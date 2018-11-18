@@ -3,9 +3,10 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { mount, withOptions } from 'react-mounter';
 import App from '../imports/ui/App.jsx';
 import Home from '../imports/ui/Home/Home.jsx';
-import CreateBlend from '../imports/ui/CreateBlend/CreateBlend.jsx';
-import JoinBlend from '../imports/ui/JoinBlend/JoinBlend.jsx';
+import CreateBlend from '../imports/ui/Blends/CreateBlend/CreateBlend.jsx';
+import JoinBlend from '../imports/ui/Blends/JoinBlend/JoinBlend.jsx';
 import Blend from '../imports/ui/Blend/Blend.jsx';
+import Blends from '../imports/ui/Blends/Blends.jsx';
 import Profile from '../imports/ui/Profile/Profile.jsx';
 import NotFound from '../imports/ui/NotFound/NotFound.jsx';
 import registerServiceWorker from './registerServiceWorker';
@@ -61,6 +62,15 @@ FlowRouter.route('/profile/:id', {
   action(params) {
     mount(App, {
       main: <Profile id={params.id} />
+    });
+  },
+});
+
+FlowRouter.route('/blends', {
+  name: 'blends',
+  action() {
+    mount(App, {
+      main: <Blends />,
     });
   },
 });

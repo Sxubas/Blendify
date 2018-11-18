@@ -26,13 +26,18 @@ class Navigation extends Component {
               <i className='material-icons'>home</i>
               <span className='nav-item-text'>Home</span>
             </a>
-            <a className={FlowRouter.getRouteName() === 'create' ? 'nav-item selected' : 'nav-item'} href='/create'>
-              <i className='material-icons'>playlist_add</i>
-              <span className='nav-item-text'>Create Blend</span>
+            <a className={FlowRouter.getRouteName() === 'profile' ? 'nav-item selected' : 'nav-item'} href={`/profile/${this.props.user.profile.id}`}>
+              <i className='material-icons'>account_circle</i>
+              <span className='nav-item-text'>Profile</span>
             </a>
-            <a className={FlowRouter.getRouteName() === 'join' ? 'nav-item selected' : 'nav-item'} href='/join'>
-              <i className='material-icons'>how_to_vote</i>
-              <span className='nav-item-text'>Join Blend</span>
+            <a className={FlowRouter.getRouteName() === 'blends' ? 'nav-item selected' : 'nav-item'} href='/blends'>
+              {
+                FlowRouter.getRouteName() === 'blends' ?
+                  <i><svg viewBox="0 0 512 512" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M311.873 77.46l166.349 373.587-39.111 17.27-166.349-373.587zM64 463.746v-384h42.666v384h-42.666zM170.667 463.746v-384h42.667v384h-42.666z" fill="currentColor"></path></svg></i>
+                  :
+                  <i><svg viewBox="0 0 512 512" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M291.301 81.778l166.349 373.587-19.301 8.635-166.349-373.587zM64 463.746v-384h21.334v384h-21.334zM192 463.746v-384h21.334v384h-21.334z" fill="currentColor"></path></svg></i>
+              }
+              <span className='nav-item-text'>Your blends</span>
             </a>
           </div>
           {this.props.user &&

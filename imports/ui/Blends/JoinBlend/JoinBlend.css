@@ -5,23 +5,10 @@
   align-items: flex-start;
   
   height: 100%;
-  padding: 32px;
+  padding: 16px 32px;
   margin: 0 auto;
-  width: 100%;
+  width: calc(100% - 2*32px); /*Remove padding*/
   max-width: 1080px;
-}
-
-.join-container h3{
-  font-weight: 600;
-  font-size: 3.2rem;
-}
-
-.join-container hr{
-  border-color: rgba(245, 245, 245, 0.3);
-  width: 100%;
-  margin: 0;
-  margin-bottom: 4px;
-  height: 1px;
 }
 
 .join-container form{

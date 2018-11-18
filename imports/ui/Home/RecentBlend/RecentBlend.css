@@ -1,15 +1,28 @@
 
+
 .recent-blend-container{
-  border: 1px #1ed760 solid;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 184px;
+  padding: 0 4px;
+}
+
+.recent-blend-container .blend-cover-art{
+  padding-top: 100%;
+  width: 100%;
+  background-size: cover;
   cursor: pointer;
 }
 
-.recent-blend-container .blend-title-image{
-  height: 230px;
-  width: 230px;
-  background-size: cover;
+.recent-blend-container a.blend-name{
+  color: whitesmoke;
+
 }
 
-i.blend-title-image{
-  font-size: 220px !important;
+.blend-cover-icon{
+  font-size: 184px !important;
+  border: 1px whitesmoke solid;
 }
