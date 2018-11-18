@@ -1,0 +1,26 @@
+
+
+.last-blend-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.last-top-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.last-cover-art{
+  width: 16vw;
+  height: 16vw;
+  background-size: cover;
+}
+
+.last-bottom-container p{
+  margin: 2px 0;
+}

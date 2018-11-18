@@ -2,7 +2,6 @@
 
 .recent-blend-container{
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -10,7 +9,7 @@
   padding: 0 4px;
 }
 
-.recent-blend-container .blend-cover-art{
+.recent-cover-art{
   padding-top: 100%;
   width: 100%;
   background-size: cover;

@@ -3,6 +3,7 @@
 
   .recent-blend-container{
     width: 144px;
+    flex-shrink: 0;
   }
 
   .recent-blend-container .blend-cover-art{

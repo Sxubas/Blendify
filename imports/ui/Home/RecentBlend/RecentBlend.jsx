@@ -29,7 +29,7 @@ class RecentBlend extends React.Component{
           (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
           <div 
             style={{ backgroundImage : `url(${this.getImageSrc(this.props.blend)})`}} 
-            className='blend-cover-art' 
+            className='recent-cover-art' 
             alt="Playlist album covers" 
             onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}/> :
           <i 

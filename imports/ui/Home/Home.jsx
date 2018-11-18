@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import RecentBlend from './RecentBlend/RecentBlend.jsx';
+import LastBlend from './LastBlend/LastBlend.jsx';
 import { Rooms } from '../../api/rooms.js';
 
 import './Home.css';
@@ -20,15 +21,25 @@ class Home extends React.Component {
         <h3>Home</h3>
         <hr />
         <h4>Recently joined</h4>
-        <div style={{width: '100%', overflowX : 'scroll'}}>
-          <div className='recent-blends-container'>
-            {this.props.recent && this.props.recent.map(el =>
-              <RecentBlend key={el._id} blend={el} />
-            )}
-          </div>
+        <div className='recent-blends-container'>
+          {this.props.recent && this.props.recent.map(el =>
+            <RecentBlend key={el._id} blend={el} />
+          )}
         </div>
-        <button className='btn'>Join Blend</button>
-        <button className='btn'>Create Blend</button>
+        
+        <hr className='dim' />
+
+        <h4>
+          Your last blend
+        </h4>
+        <LastBlend />
+
+        <hr className='dim'/>
+
+        <div className='home-buttons-container'>
+          <button className='btn'>Join Blend</button>
+          <button className='btn'>Create Blend</button>
+        </div>
       </div>
     );
   }
