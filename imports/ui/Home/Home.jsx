@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import RecentBlend from './RecentBlend/RecentBlend.jsx';
 import LastBlend from './LastBlend/LastBlend.jsx';
 import { Rooms } from '../../api/rooms.js';
@@ -37,8 +38,8 @@ class Home extends React.Component {
         <hr className='dim'/>
 
         <div className='home-buttons-container'>
-          <button className='btn'>Join Blend</button>
-          <button className='btn'>Create Blend</button>
+          <button onClick={() => FlowRouter.go('join')} className='btn'>Join Blend</button>
+          <button onClick={() => FlowRouter.go('create')} className='btn'>Create Blend</button>
         </div>
       </div>
     );

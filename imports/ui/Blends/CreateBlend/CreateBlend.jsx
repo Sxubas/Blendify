@@ -42,11 +42,11 @@ class CreateBlend extends React.Component {
 
           <label>
             Description
-            <textarea cols="40" rows="5" maxLength="300" ref={ref => this.descInput = ref} />
+            <textarea className='create-description' maxLength="300" ref={ref => this.descInput = ref} />
           </label>
           <div>
-            <button className='btn black' onClick={() => FlowRouter.go('home')}>Cancel</button>
             <button className='btn' type="submit">Create</button>            
+            <button className='btn black' onClick={() => FlowRouter.go('home')}>Cancel</button>
           </div>
         </form>
       </div>

@@ -54,7 +54,7 @@ class Navigation extends Component {
                   <i className='nav-user-avatar material-icons' title={this.props.user.profile.display_name}>
                     account_box
                   </i>}
-                <span className={FlowRouter.getRouteName() === 'profile' && 'selected'}>
+                <span className={FlowRouter.getRouteName() === 'profile' ? 'selected' : ''}>
                   {this.props.user.profile.display_name}
                 </span>
               </a>

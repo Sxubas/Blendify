@@ -19,6 +19,7 @@
   width: 16vw;
   height: 16vw;
   background-size: cover;
+  flex-shrink: 0;
 }
 
 .last-bottom-container p{
