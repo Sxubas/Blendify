@@ -8,7 +8,7 @@ class BlendItem extends Component {
   getImageSrc(blend) {
     if (blend.images) {
       //Inverse loop to pick smallest image 
-      for (let i = blend.images.length - 1; i >= 0 ; i--) {
+      for (let i = blend.images.length - 1; i >= 0; i--) {
         return blend.images[i].url;
       }
     }
@@ -19,22 +19,23 @@ class BlendItem extends Component {
   render() {
     return (
       <div className='blend-item-container'>
-        {(this.props.blend.images && this.props.blend.images.length > 0) ||
-          (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
-          <div 
-            style={{ backgroundImage : `url(${this.getImageSrc(this.props.blend)})`}} 
-            className='blend-item-cover-art' /> :
-          <i className='material-icons blend-cover-icon'>photo</i>}
-          
-          <div className='blend-item-text'>
-            <span>POP/STARS</span>
-            <span>KDA</span>
+        <div className='blend-item-content'>
+          {(this.props.blend.images && this.props.blend.images.length > 0) ||
+            (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
+            <div
+              style={{ backgroundImage: `url(${this.getImageSrc(this.props.blend)})` }}
+              className='blend-item-cover-art' /> :
+            <i className='material-icons blend-cover-icon'>photo</i>}
+          <div className="blend-item-text">
+            <a href={`/blend/${this.props.blend.code}`} className='blend-item-title title'>{this.props.blend.name}</a >
+            <span>Owner: <a href={`/profile/${this.props.blend.owner.id}`}>{this.props.blend.owner.display_name}</a> </span>
           </div>
+        </div>
 
-          <div>
-            <i className='material-icons'>more_horiz</i>
-          </div>
-        
+        <div>
+          <i className='material-icons'>more_horiz</i>
+        </div>
+
       </div>
     );
   }

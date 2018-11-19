@@ -7,10 +7,11 @@ import { Rooms } from '../../api/rooms.js';
 import BlendItem from './BlendItem/BlendItem.jsx';
 
 import './Blends.css';
+import './Blends.mobile.css';
 
 class Blends extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       showingCreated: true,
@@ -24,7 +25,7 @@ class Blends extends Component {
         <h3>
           Your blends
         </h3>
-        <hr/>
+        <hr />
 
         <div className='blends-buttons-container'>
           <button onClick={() => FlowRouter.go('join')} className='btn'>Join Blend</button>
@@ -34,27 +35,31 @@ class Blends extends Component {
         <h4>Recent blends</h4>
 
         <div className='blends-history-filter'>
-          <label>
-            Show created
-            <input 
-              type='checkbox'
-              onChange={ event => this.setState({ showingCreated: event.target.checked })}
+          <span 
+            onClick={() => this.setState({ showingCreated: !this.state.showingCreated })}
+            className={this.state.showingCreated ? 'checked' : ''}>
+            <i
+              className='material-icons'
               checked={this.state.showingCreated}>
-            </input>
-          </label>
-          <label>
+              {this.state.showingCreated ? 'check_box' : 'check_box_outline_blank'}
+            </i>
+            Show created
+          </span>
+          <span 
+            onClick={() => this.setState({ showingJoined: !this.state.showingJoined })}
+            className={this.state.showingJoined ? 'checked' : ''}>
+            <i
+              className='material-icons'
+              checked={this.state.showingJoined}>
+              {this.state.showingJoined ? 'check_box' : 'check_box_outline_blank'}
+            </i>
             Show joined
-            <input 
-              type='checkbox'
-              checked={this.state.showingJoined} 
-              onChange={ event => this.setState({ showingJoined : event.target.checked })}>
-            </input>
-          </label>
+          </span>
         </div>
 
         <div className='blends-history-container'>
-          {this.props.history && this.props.history.map( blend => 
-            <BlendItem blend={blend} key={blend._id}/>
+          {this.props.history && this.props.history.map(blend =>
+            <BlendItem blend={blend} key={blend._id} />
           )}
         </div>
       </div>

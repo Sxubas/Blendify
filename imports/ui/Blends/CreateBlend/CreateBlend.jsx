@@ -46,7 +46,7 @@ class CreateBlend extends React.Component {
           </label>
           <div>
             <button className='btn' type="submit">Create</button>            
-            <button className='btn black' onClick={() => FlowRouter.go('home')}>Cancel</button>
+            <button className='btn black' onClick={() => window.history.back()}>Cancel</button>
           </div>
         </form>
       </div>

@@ -16,9 +16,13 @@
   cursor: pointer;
 }
 
-.recent-blend-container a.blend-name{
-  color: whitesmoke;
+.recent-blend-container a.title{
+  margin-top: 8px;
+  font-size: 1.16rem;
+}
 
+.recent-blend-container p{
+  margin: 8px 0;
 }
 
 .blend-cover-icon{
