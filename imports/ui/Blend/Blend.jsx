@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Rooms } from '../../api/rooms.js';
+
 import './Blend.css';
+import './Blend.mobile.css';
 
 class Blend extends Component {
 
@@ -73,22 +75,27 @@ class Blend extends Component {
     return (this.props.room ?
       <div className="blend-container">
         <div className='blend-title-container'>
+          {/* Blend image rendering */}
           {(this.props.room.images && this.props.room.images.length > 0) ||
             (this.props.room.tracks && this.props.room.tracks.length > 0) ?
             <img src={this.getImageSrc(this.props.room)} className='blend-title-image' alt="Playlist image" /> :
             <i className='material-icons blend-title-image'>photo</i>
           }
           <div className='blend-title-text'>
+
             <h3 className="blend-name">{this.props.room.name}</h3>
             <span>Created by <a href={`/profile/${this.props.room.owner.id}`}>{this.props.room.owner.display_name}</a></span>
-            <span className='code-text'><i className="material-icons">share</i>{this.props.room.code}</span>
+            
+            {/* Contributors rendering */}
             {this.props.room.contributors.length > 1 ?
-              <span onClick={() => this.setState({ showingContributors: !this.state.showingContributors })}>
-                {this.state.showingContributors ? 'Hide contributors' : 'Show contributors'}
+              <span className='blend-title-contributors' onClick={() => this.setState({ showingContributors: !this.state.showingContributors })}>
+                {this.state.showingContributors ? 'Hide contributors' : `${this.props.room.contributors.length} Contributors`}
               </span> :
               <span>No contributors yet</span>}
+
             {this.state.showingContributors && this.renderContributors()}
-            {!this.state.showTracksToAdd && <button onClick={() => this.addTracks()} className='btn white small'>add tracks</button>}
+
+            {<button onClick={() => this.addTracks()} className='btn white small'>add tracks</button>}
           </div>
         </div>
         <div className='track-list-container'>
@@ -138,7 +145,7 @@ class Blend extends Component {
         {this.props.room.contributors.map((contr, i) => {
           if (i === this.props.room.contributors.length - 1) { /*Render the last one without ','*/
             return (
-              <div key={contr.display_name}><a href={`profile/${contr.display_name}`}>{contr.display_name}</a>.</div>
+              <div key={contr.display_name}><a href={`profile/${contr.display_name}`}>{contr.display_name}</a></div>
             );
           }
           if (i !== 0) { /*Do not render first contributor (owner)*/

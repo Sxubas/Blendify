@@ -15,7 +15,8 @@ class Blends extends Component {
     super(props);
     this.state = {
       showingCreated: true,
-      showingJoined: true
+      showingJoined: true,
+      selectedBlend: ''
     };
   }
 
@@ -59,7 +60,12 @@ class Blends extends Component {
 
         <div className='blends-history-container'>
           {this.props.history && this.props.history.map(blend =>
-            <BlendItem blend={blend} key={blend._id} />
+            <BlendItem 
+              blend={blend}
+              key={blend._id}
+              selectedBlend={this.state.selectedBlend}
+              onClick={() => this.setState({ selectedBlend: blend._id })}
+              onDblClick={() => FlowRouter.go(`/blend/${blend.code}`)}/>
           )}
         </div>
       </div>

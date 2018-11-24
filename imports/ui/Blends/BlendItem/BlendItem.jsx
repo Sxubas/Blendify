@@ -17,15 +17,25 @@ class BlendItem extends Component {
   }
 
   render() {
+
+    const isSelected = this.props.blend._id === this.props.selectedBlend;
+
     return (
-      <div className='blend-item-container'>
+      <div 
+        className={`blend-item-container ${isSelected ? 'selected-blend' : ''}`}
+        onClick={this.props.onClick}
+        onDoubleClick={this.props.onDblClick}>
         <div className='blend-item-content'>
           {(this.props.blend.images && this.props.blend.images.length > 0) ||
             (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
             <div
               style={{ backgroundImage: `url(${this.getImageSrc(this.props.blend)})` }}
-              className='blend-item-cover-art' /> :
-            <i className='material-icons blend-cover-icon'>photo</i>}
+              className='blend-item-cover-art' 
+              onClick={this.props.onDblClick}/> :
+            <i
+              className='material-icons blend-cover-icon'
+              onClick={this.props.onDblClick}>photo</i>}
+              
           <div className="blend-item-text">
             <a href={`/blend/${this.props.blend.code}`} className='blend-item-title title'>{this.props.blend.name}</a >
             <span>Owner: <a href={`/profile/${this.props.blend.owner.id}`}>{this.props.blend.owner.display_name}</a> </span>
@@ -42,7 +52,10 @@ class BlendItem extends Component {
 }
 
 BlendItem.propTypes = {
-  blend: PropTypes.object.isRequired
+  blend: PropTypes.object.isRequired,
+  selectedBlend: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  onDblClick: PropTypes.func.isRequired
 };
 
 export default BlendItem;
