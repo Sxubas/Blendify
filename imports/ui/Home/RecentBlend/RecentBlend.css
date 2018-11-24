@@ -27,5 +27,7 @@
 
 .blend-cover-icon{
   font-size: 184px !important;
+  box-sizing: border-box;
+  height: 184px;
   border: 1px whitesmoke solid;
 }

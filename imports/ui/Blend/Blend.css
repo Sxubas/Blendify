@@ -8,7 +8,7 @@
   height: 100%;
   padding: 32px;
   margin: 0 auto;
-  width: 100%;
+  width: calc(100% - 2*32px);
   max-width: 1080px;
 }
 
@@ -19,9 +19,12 @@
   align-items: center;
 }
 
-.blend-title-image{
+img.blend-title-image{
   padding-top: 100%;
   background-size: cover;
+}
+
+i.blend-title-image{
   font-size: 230px;
 }
 
