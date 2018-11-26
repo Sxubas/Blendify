@@ -44,10 +44,10 @@ class JoinBlend extends React.Component {
             onChange={event => this.setState({ code: event.target.value })}
             value={this.state.code}
           />
-          {this.invalidCode() && <p role='alert'>The code must have the format: XX999</p>}
+          {this.invalidCode() && <p role='alert'>The code should have the format: XX999</p>}
           <div>
             <button aria-label="Join Blend" className='btn' type="submit" disabled={this.invalidCode()}>Join blend</button>
-            <button aria-label="Cancel" className='btn black' onClick={() => FlowRouter.go('home')}>Cancel</button>
+            <button aria-label="Cancel" className='btn black' onClick={() => window.history.back()}>Cancel</button>
           </div>
         </form>
       </div>

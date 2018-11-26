@@ -75,6 +75,18 @@ body, #app{
   font-weight: 500;
 }
 
+.app-container .app-content-container a, .app-container .app-content-container a:visited{
+  color: #b6ffd0;
+}
+
+.app-container .app-content-container a.title, .app-container .app-content-container a.title:visited{
+  color: whitesmoke;
+}
+
+.app-container .app-content-container a::first-letter{
+  text-transform: capitalize;
+}
+
 
 html .app-container .btn {
   display: inline-block;

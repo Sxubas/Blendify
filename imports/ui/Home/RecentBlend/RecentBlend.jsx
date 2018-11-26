@@ -36,7 +36,7 @@ class RecentBlend extends React.Component{
             className='material-icons blend-cover-icon' 
             onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}> photo</i>
         }
-        <a className='blend-name' href={`/blend/${this.props.blend.code}`}>{this.props.blend.name}</a>
+        <a className='title' href={`/blend/${this.props.blend.code}`}>{this.props.blend.name}</a>
         <p>Created by <a href={`/profile/${this.props.blend.owner.id}`}>{this.props.blend.owner.display_name}</a></p>
       </div>
     );

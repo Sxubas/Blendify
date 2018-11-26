@@ -1,0 +1,31 @@
+
+@media only screen and (max-width: 600px) {
+
+  .blend-title-container{
+    flex-direction: column;
+  }
+
+  .blend-title-text{
+    align-items: center;
+  }
+
+  .blend-title-text h3{
+    line-height: 2.6rem;
+    text-align: center;
+  }
+
+  .blend-title-text p{
+    text-align: center;
+  }
+
+  img.blend-title-image{
+    height: 24vh;
+    width: 24vh;
+    padding-top: 0;
+    background-size: cover;
+  }
+  
+  i.blend-title-image{
+    font-size: 120px;
+  }
+}

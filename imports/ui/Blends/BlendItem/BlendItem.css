@@ -1,0 +1,48 @@
+
+.blend-item-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  width: calc(100% - 2*8px); /*Padding removal*/
+  border-top: 1px rgba(245, 245, 245, 0.3) solid;
+  transition: background-color 66ms ease-in-out;
+}
+
+.blend-item-container.selected-blend{
+  background-color: rgba(116, 116, 116, 0.3);
+}
+
+.blend-item-container:hover{
+  background-color: rgba(71, 71, 71, 0.4);
+}
+
+.blend-item-cover-art {
+  height: 60px;
+  width: 60px;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.blend-item-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.blend-item-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 16px;
+  font-size: 0.8rem;
+}
+
+.blend-item-text .blend-item-title{
+  font-size: 1.16rem;
+  margin: 4px 0 ;
+  width: 100%;
+}

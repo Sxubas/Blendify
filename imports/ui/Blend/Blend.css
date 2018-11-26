@@ -8,7 +8,7 @@
   height: 100%;
   padding: 32px;
   margin: 0 auto;
-  width: 100%;
+  width: calc(100% - 2*32px);
   max-width: 1080px;
 }
 
@@ -19,9 +19,15 @@
   align-items: center;
 }
 
-.blend-title-image{
-  padding-top: 100%;
+img.blend-title-image{
+  height: 20vw;
+  width: 20vw;
+  max-width: 344px;
+  max-height: 344px;
   background-size: cover;
+}
+
+i.blend-title-image{
   font-size: 230px;
 }
 
@@ -46,6 +52,16 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.blend-title-contributors{
+  cursor: pointer;
+}
+
+.blend-title-contributors:hover{
+  text-decoration: underline;
+}
+
+
 
 .blend-contributors-container{
   display: flex;

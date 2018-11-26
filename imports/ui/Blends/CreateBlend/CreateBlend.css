@@ -20,6 +20,11 @@
   margin-top: 16px;
 }
 
+.create-description{
+  max-width: calc(100vh - 256px);
+  width: 300px;
+}
+
 .create-container label{
   display: flex;
   flex-direction: column;
