@@ -77,7 +77,7 @@ Spotify.refreshAccessToken = (userId=undefined) => {
   });
 };
 
-Spotify.createPlaylist = (access_token, user_id, name, description) => {  
+Spotify.createPlaylist = (access_token, user_id, name, description, type = 'tracks', limit = 15, time_range = 'medium_term') => {  
   const body = {
     name,
     description,
@@ -93,11 +93,26 @@ Spotify.createPlaylist = (access_token, user_id, name, description) => {
       }
     })
       .then(response => resolve(response.data) /*Return the requested data*/)
-      .catch(err => reject(err));
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
   });
 };
 
-Spotify.getPlaylist = (access_token, playlist_id) => {// TODO: handle token expired
+Spotify.getPlaylist = (access_token, playlist_id, type = 'tracks', limit = 15, time_range = 'medium_term') => {// TODO: handle token expired
   return new Promise((resolve, reject) => {
     axios.get(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
       headers: {
@@ -107,11 +122,26 @@ Spotify.getPlaylist = (access_token, playlist_id) => {// TODO: handle token expi
       }
     })
       .then(response => resolve(response.data) /*Return the requested data*/)
-      .catch(err => reject(err));
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
   });
 };
 
-Spotify.addTracks = (access_token, playlist_id, uris) => {// TODO: handle token expired
+Spotify.addTracks = (access_token, playlist_id, uris, type = 'tracks', limit = 15, time_range = 'medium_term') => {// TODO: handle token expired
   return new Promise((resolve, reject) => {
     const body = {
       uris,
@@ -124,7 +154,146 @@ Spotify.addTracks = (access_token, playlist_id, uris) => {// TODO: handle token 
       }
     })
       .then(response => resolve(response.data) /*Return the requested data*/)
-      .catch(err => reject(err));
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
+  });
+};
+
+Spotify.removeTracks = (access_token, playlist_id, tracks, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+  return new Promise((resolve, reject) => {
+    const body = {
+      tracks
+    };
+    axios.delete(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      },
+      data: body
+    })
+      .then(response => resolve(response.data))
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
+  });
+};
+
+Spotify.getAvailableGenres = (access_token, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+  return new Promise((resolve, reject) => {
+    axios.get('https://api.spotify.com/v1/recommendations/available-genre-seeds', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+      .then(response => resolve(response.data) /*Return the requested data*/)
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
+  });
+};
+
+Spotify.getRecommendations = (access_token, seed_genres, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+  //https://api.spotify.com/v1/recommendations
+  return new Promise((resolve, reject) => {
+    axios.get('https://api.spotify.com/v1/recommendations', {
+      params: {
+        seed_genres
+      },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+      .then(response => resolve(response.data))
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
+  });
+};
+
+Spotify.getPlaylists = (access_token, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+  return new Promise((resolve, reject) => {
+    axios.get('https://api.spotify.com/v1/me/playlists', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+      .then(response => resolve(response.data))
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
   });
 };
 

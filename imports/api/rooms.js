@@ -57,7 +57,7 @@ Meteor.methods({
     });
     const room = Rooms.findOne({code});
     if(!room) return new Meteor.Error('The room does not exist');
-    const owner = Meteor.users.findOne({'profile.id': room.owner.id})
+    const owner = Meteor.users.findOne({'profile.id': room.owner.id});
     Spotify.addTracks(owner.services.spotify.accessToken, room.id, uris)
       .then((res) => {
         console.log(res);
@@ -94,7 +94,7 @@ Meteor.methods({
     const user = Meteor.user();
     const room = Rooms.findOne({code, 'contributors.id': user.profile.id});
     if(!room) return new Meteor.Error('Not authorized');
-    const owner = Meteor.users.findOne({'profile.id': room.owner.id})
+    const owner = Meteor.users.findOne({'profile.id': room.owner.id});
     Spotify.getPlaylist(owner.services.spotify.accessToken, room.id)
       .then(res => {
         Rooms.update({code}, {$set: {images: res.images}});
@@ -103,5 +103,30 @@ Meteor.methods({
         console.log('wat');
         console.log(err);
       });
+  },
+  'rooms.getAvailableGenres'() {
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    return Spotify.getAvailableGenres(user.services.spotify.accessToken);
+  },
+  'rooms.getRecommendations'(genres) {
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    return Spotify.getRecommendations(user.services.spotify.accessToken, genres);
+  },
+  'rooms.getPlaylists'() {
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    return Spotify.getPlaylists(user.services.spotify.accessToken);
+  },
+  'rooms.removeTracks'(id, uris) {//TODO: recibir el code de la sala
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    return Spotify.removeTracks(user.services.spotify.accessToken, id, uris);
+  },
+  'rooms.getPlaylist'(id) {//TODO: recibir el code de la sala
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    return Spotify.getPlaylist(user.services.spotify.accessToken, id);
   }
 });
