@@ -60,13 +60,13 @@ class Blends extends Component {
 
         <div className='blends-history-container'>
           {this.props.history && this.props.history.map(blend =>
-            <BlendItem 
+            this.props.user && ((blend.owner.id===this.props.user.id && this.state.showingCreated) || (blend.owner.id!==this.props.user.id && this.state.showingJoined)) && (<BlendItem 
               blend={blend}
               key={blend._id}
               selectedBlend={this.state.selectedBlend}
               onClick={() => this.setState({ selectedBlend: blend._id })}
               onDblClick={() => FlowRouter.go(`/blend/${blend.code}`)}/>
-          )}
+            ))}
         </div>
       </div>
     );
@@ -79,9 +79,11 @@ Blends.propTypes = {
 };
 
 export default withTracker(() => {
-  const user = Meteor.user();
-  if (user)
-    Meteor.subscribe('rooms', user.profile.id);
+  let user = Meteor.user();
+  if (user) {
+    user = user.profile;
+    Meteor.subscribe('rooms', user.id);
+  }
   return {
     user,
     history: Rooms.find({}, { sort: { timestamp: -1 } }).fetch()
