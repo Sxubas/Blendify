@@ -45,8 +45,7 @@ class Home extends React.Component {
         <h4>
           Your last blend
         </h4>
-        <LastBlend />
-
+        {this.props.user && <LastBlend blend={this.props.last} />}
         <hr className='dim'/>
 
         <div className='home-buttons-container'>
@@ -60,17 +59,21 @@ class Home extends React.Component {
 
 Home.propTypes = {
   user: PropTypes.object,
-  recent: PropTypes.array
+  recent: PropTypes.array,
+  last: PropTypes.object,
 };
 
 export default withTracker(() => {
   // props here will have `main`, passed from the router
   // anything we return from this function will be *added* to it
-  const user = Meteor.user();
-  if (user)
-    Meteor.subscribe('rooms', user.profile.id);
+  let user = Meteor.user();
+  if (user) {
+    user = user.profile;
+    Meteor.subscribe('rooms', user.id);
+  }
   return {
     user,
-    recent: Rooms.find({}, { sort: { timestamp: -1 }, limit: 5 }).fetch()
+    recent: Rooms.find({}, { sort: { timestamp: -1 }, limit: 5 }).fetch(),
+    last: user ? Rooms.findOne({'owner.id': user.id}, {sort: {timestamp: -1}}) : undefined,
   };
 })(Home);
