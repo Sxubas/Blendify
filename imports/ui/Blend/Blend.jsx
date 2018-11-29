@@ -15,30 +15,31 @@ class Blend extends Component {
       showingContributors: false,
       showTracksToAdd: false,
       tracksToAdd: [],
+      tracksRetrieved: [],
     };
   }
 
   addTracks() {
     //If tracks havent been requested
-    if (this.state.tracksToAdd.length === 0) {
+    if (this.state.tracksRetrieved.length === 0) {
       Meteor.call('users.getTopTracks', (err, res) => {
         if (err) {
           alert(err);
           return;
         }
         Meteor.call('rooms.autoUpdateImageCover', this.props.code);
-        this.setState({ showTracksToAdd: true, tracksToAdd: res.items });
+        this.setState({ showTracksToAdd: true, tracksToAdd: res.items, tracksRetrieved: res.items.slice() });
       });
     }
     //Tracks have already been fetched, do not call API
     else {
-      this.setState({ showTracksToAdd: true });
+      this.setState({ showTracksToAdd: true, tracksToAdd: this.state.tracksRetrieved.slice() });
     }
   }
 
   deleteTrackToAdd(i) {
     this.setState({
-      tracksToAdd: this.state.tracksToAdd.filter((t, i2) => {
+      tracksToAdd: this.state.tracksToAdd.filter((_, i2) => {
         return i !== i2;
       })
     });
@@ -103,7 +104,7 @@ class Blend extends Component {
           {this.state.showTracksToAdd &&
             <div className='add-tracks-container'>
               {this.state.tracksToAdd.map((track, i) =>
-                <div className='track-item-container' key={track.id}>
+                <div className='track-item-container' key={i}>
                   <div className='add-track-item'>
                     <i className='material-icons remove-track' tabIndex='0' onClick={() => this.deleteTrackToAdd(i)}>clear</i>
                     <div>

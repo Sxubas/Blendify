@@ -77,7 +77,7 @@ Spotify.refreshAccessToken = (userId=undefined) => {
   });
 };
 
-Spotify.createPlaylist = (access_token, user_id, name, description, type = 'tracks', limit = 15, time_range = 'medium_term') => {  
+Spotify.createPlaylist = (access_token, user_id, name, description) => {  
   const body = {
     name,
     description,
@@ -99,7 +99,7 @@ Spotify.createPlaylist = (access_token, user_id, name, description, type = 'trac
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.createPlaylist(new_access_token, user_id, name, description))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -112,7 +112,7 @@ Spotify.createPlaylist = (access_token, user_id, name, description, type = 'trac
   });
 };
 
-Spotify.getPlaylist = (access_token, playlist_id, type = 'tracks', limit = 15, time_range = 'medium_term') => {// TODO: handle token expired
+Spotify.getPlaylist = (access_token, playlist_id) => {// TODO: handle token expired
   return new Promise((resolve, reject) => {
     axios.get(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
       headers: {
@@ -128,7 +128,7 @@ Spotify.getPlaylist = (access_token, playlist_id, type = 'tracks', limit = 15, t
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.getPlaylist(new_access_token, playlist_id))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -141,7 +141,7 @@ Spotify.getPlaylist = (access_token, playlist_id, type = 'tracks', limit = 15, t
   });
 };
 
-Spotify.addTracks = (access_token, playlist_id, uris, type = 'tracks', limit = 15, time_range = 'medium_term') => {// TODO: handle token expired
+Spotify.addTracks = (access_token, playlist_id, uris) => {// TODO: handle token expired
   return new Promise((resolve, reject) => {
     const body = {
       uris,
@@ -160,7 +160,7 @@ Spotify.addTracks = (access_token, playlist_id, uris, type = 'tracks', limit = 1
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.addTracks(new_access_token, playlist_id, uris))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -173,7 +173,7 @@ Spotify.addTracks = (access_token, playlist_id, uris, type = 'tracks', limit = 1
   });
 };
 
-Spotify.removeTracks = (access_token, playlist_id, tracks, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+Spotify.removeTracks = (access_token, playlist_id, tracks) => {
   return new Promise((resolve, reject) => {
     const body = {
       tracks
@@ -193,7 +193,7 @@ Spotify.removeTracks = (access_token, playlist_id, tracks, type = 'tracks', limi
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.removeTracks(new_access_token, playlist_id, tracks))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -206,7 +206,7 @@ Spotify.removeTracks = (access_token, playlist_id, tracks, type = 'tracks', limi
   });
 };
 
-Spotify.getAvailableGenres = (access_token, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+Spotify.getAvailableGenres = (access_token) => {
   return new Promise((resolve, reject) => {
     axios.get('https://api.spotify.com/v1/recommendations/available-genre-seeds', {
       headers: {
@@ -222,7 +222,7 @@ Spotify.getAvailableGenres = (access_token, type = 'tracks', limit = 15, time_ra
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.getAvailableGenres(new_access_token))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -235,7 +235,7 @@ Spotify.getAvailableGenres = (access_token, type = 'tracks', limit = 15, time_ra
   });
 };
 
-Spotify.getRecommendations = (access_token, seed_genres, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+Spotify.getRecommendations = (access_token, seed_genres) => {
   //https://api.spotify.com/v1/recommendations
   return new Promise((resolve, reject) => {
     axios.get('https://api.spotify.com/v1/recommendations', {
@@ -255,7 +255,7 @@ Spotify.getRecommendations = (access_token, seed_genres, type = 'tracks', limit 
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.getRecommendations(new_access_token, seed_genres))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -268,7 +268,7 @@ Spotify.getRecommendations = (access_token, seed_genres, type = 'tracks', limit 
   });
 };
 
-Spotify.getPlaylists = (access_token, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+Spotify.getPlaylists = (access_token) => {
   return new Promise((resolve, reject) => {
     axios.get('https://api.spotify.com/v1/me/playlists', {
       headers: {
@@ -284,7 +284,7 @@ Spotify.getPlaylists = (access_token, type = 'tracks', limit = 15, time_range = 
           console.log('Access token expired, refreshing access token...');
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
-            .then(new_access_token => Spotify.getTopTracks(new_access_token, type, limit, time_range))
+            .then(new_access_token => Spotify.getPlaylists(new_access_token))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
