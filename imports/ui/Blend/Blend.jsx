@@ -14,6 +14,7 @@ class Blend extends Component {
     this.state = {
       showingContributors: false,
       showTracksToAdd: false,
+      edit: false,
       tracksToAdd: [],
       tracksRetrieved: [],
     };
@@ -66,8 +67,8 @@ class Blend extends Component {
   }
 
   parseDuration(durationMs) {
-    const mins = Math.floor(durationMs / 1000 / 60);
-    let secs = Math.ceil((durationMs / 1000 / 60 - mins) * 60);
+    const mins = Math.floor(durationMs / 1000.0 / 60);
+    let secs = Math.ceil((durationMs / 1000.0 / 60 - mins) * 60);
     if (secs < 10) secs = '0' + secs;
     return `${mins}:${secs}`;
   }
@@ -123,8 +124,8 @@ class Blend extends Component {
 
           {!this.state.showTracksToAdd && /*Do not show when addding tracks*/
             (this.props.room.tracks && this.props.room.tracks.length > 0 ?
-              this.props.room.tracks.map(track =>
-                <div className='track-item-container' key={track.track.id}>
+              this.props.room.tracks.map((track, i) =>
+                <div className='track-item-container' key={i}>
                   <div>
                     <p>{track.track.name}</p>
                     {this.renderArtists(track.track)}
@@ -166,14 +167,14 @@ class Blend extends Component {
           if (i === track.artists.length - 1) {
             return (
               <div key={artist.id}>
-                <a href={`https://open.spotify.com/artist/${artist.id}`}>{artist.name}</a>
+                <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name}</a>
               </div>
             );
           }
 
           return (
             <div key={artist.id}>
-              <a href={`https://open.spotify.com/artist/${artist.id}`}>{artist.name}</a>, </div>
+              <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name}</a>, </div>
           );
         })}
       </div>

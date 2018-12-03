@@ -1,3 +1,4 @@
+/* global Promise */
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import Spotify from './Spotify';
@@ -133,5 +134,83 @@ Meteor.methods({
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
     return Spotify.getPlaylist(user.services.spotify.accessToken, id);
+  },
+  'rooms.updateRoom'(code) {
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    const room = Rooms.findOne({code, 'owner.id': user.profile.id});
+    return new Promise((resolve, reject) => {
+      if(!room) reject(new Meteor.Error('Not Authorized'));
+      Spotify.getPlaylists(user.services.spotify.accessToken)
+        .then(res => {
+          if(res.items.filter(pl => pl.id === room.id).length === 0) {
+            Rooms.remove({id: room.id}, (err) => {
+              if(err) {
+                console.log('wtf');
+                console.log(err);
+                reject(err);
+              }
+              else {
+                reject(new Meteor.Error('The playlist does not exist'));
+              }
+            });
+          }
+          else {
+            Spotify.getPlaylist(user.services.spotify.accessToken, room.id)
+              .then(r => {
+                const tracks = r.tracks.items;
+                const toBeDeleted = [];
+                const myTracks = [];
+                for(let track of tracks) {
+                  track = track.track;
+                  track.available_markets = undefined;
+                  track.album.available_markets = undefined;
+                  let added = false;
+                  let j = 0;
+                  for(; j<room.tracks.length && !added; j++) {
+                    const tr = room.tracks[j];
+                    if(track.id === tr.id) {
+                      added = true;
+                      myTracks.push(tr);
+                      break;
+                    }
+                    else {
+                      toBeDeleted.push(tr);
+                    }
+                  }
+                  if(!added) {
+                    for(let i = 0; i<toBeDeleted.length; i++) {
+                      const tr = toBeDeleted[i];
+                      if(track.id === tr.id) {
+                        myTracks.push(tr);
+                        toBeDeleted.splice(i, 1);
+                        added = true;
+                        break;
+                      }
+                    }
+                    if(!added) {
+                      myTracks.push({track, user:room.owner});
+                    }
+                  }
+                }
+                Rooms.update({id: room.id}, {$set: {tracks: myTracks, images: r.images}}, (err) => {
+                  if(err) {
+                    console.log('wtf2');
+                    reject(err);
+                  }
+                  else resolve(r);
+                });
+              })
+              .catch(err => {
+                reject(err);
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          reject(err);
+        });
+
+    });
   }
 });

@@ -17,7 +17,7 @@ class Home extends React.Component {
   }
 
   test() {
-    Meteor.call('rooms.getPlaylist', (err, res) => {
+    Meteor.call('rooms.updateRoom', 'UC476', (err, res) => {
       if(err) {
         console.log('yaper prro');
         console.log(err);
