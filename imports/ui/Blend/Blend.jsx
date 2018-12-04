@@ -17,6 +17,7 @@ class Blend extends Component {
       edit: false,
       tracksToAdd: [],
       tracksRetrieved: [],
+      tracksToRemove: [],
     };
   }
 
@@ -29,13 +30,17 @@ class Blend extends Component {
           return;
         }
         Meteor.call('rooms.autoUpdateImageCover', this.props.code);
-        this.setState({ showTracksToAdd: true, tracksToAdd: res.items, tracksRetrieved: res.items.slice() });
+        this.setState({ showTracksToAdd: true, edit: false, tracksToAdd: res.items, tracksRetrieved: res.items.slice() });
       });
     }
     //Tracks have already been fetched, do not call API
     else {
-      this.setState({ showTracksToAdd: true, tracksToAdd: this.state.tracksRetrieved.slice() });
+      this.setState({ showTracksToAdd: true, edit: false, tracksToAdd: this.state.tracksRetrieved.slice() });
     }
+  }
+
+  edit() {
+    this.setState({ showTracksToAdd: false, edit: true, tracksToRemove: [] });
   }
 
   deleteTrackToAdd(i) {
@@ -97,7 +102,8 @@ class Blend extends Component {
 
             {this.state.showingContributors && this.renderContributors()}
 
-            {<button onClick={() => this.addTracks()} className='btn white small'>add tracks</button>}
+            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.addTracks()} className='btn white small'>add tracks</button>}
+            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.edit()} className='btn white small'>edit</button>}
           </div>
         </div>
         <div className='track-list-container'>
@@ -122,7 +128,7 @@ class Blend extends Component {
               </div>
             </div>}
 
-          {!this.state.showTracksToAdd && /*Do not show when addding tracks*/
+          {!this.state.showTracksToAdd && !this.state.edit && /*Do not show when adding tracks*/
             (this.props.room.tracks && this.props.room.tracks.length > 0 ?
               this.props.room.tracks.map((track, i) =>
                 <div className='track-item-container' key={i}>
@@ -134,6 +140,15 @@ class Blend extends Component {
                 </div>
               ) :
               <p>There are not songs in the list yet.</p>)
+          }
+
+          {this.state.edit &&
+            (<div className='add-tracks-container'>
+              {this.props.room.tracks.map((tr, i) => {
+
+              })}
+              <button className='btn black' onClick={() => this.setState({ edit: false })}>Cancel</button>
+            </div>)
           }
         </div>
       </div> : null
