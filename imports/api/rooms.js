@@ -125,22 +125,27 @@ Meteor.methods({
     const user = Meteor.user();
     return Spotify.getPlaylists(user.services.spotify.accessToken);
   },
-  'rooms.removeTracks'(id, uris) {//TODO: recibir el code de la sala
+  'rooms.removeTracks'(code, uris) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
-    return Spotify.removeTracks(user.services.spotify.accessToken, id, uris);
+    const room = Rooms.findOne({code, 'contributors.id': user.profile.id});
+    if(!room) return new Meteor.Error('Not Authorized');
+    Spotify.removeTracks(user.services.spotify.accessToken, room.id, uris);
   },
-  'rooms.getPlaylist'(id) {//TODO: recibir el code de la sala
+  'rooms.getPlaylist'(code) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
-    return Spotify.getPlaylist(user.services.spotify.accessToken, id);
+    const room = Rooms.findOne({code, 'contributors.id': user.profile.id});
+    if(!room) return new Meteor.Error('Not Authorized');
+    return Spotify.getPlaylist(user.services.spotify.accessToken, room.id);
   },
   'rooms.updateRoom'(code) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
     const room = Rooms.findOne({code, 'owner.id': user.profile.id});
+    if(!room) return new Meteor.Error('Not Authorized');
     return new Promise((resolve, reject) => {
-      if(!room) reject(new Meteor.Error('Not Authorized'));
+      
       Spotify.getPlaylists(user.services.spotify.accessToken)
         .then(res => {
           if(res.items.filter(pl => pl.id === room.id).length === 0) {
