@@ -112,7 +112,7 @@ Spotify.createPlaylist = (access_token, user_id, name, description) => {
   });
 };
 
-Spotify.getPlaylist = (access_token, playlist_id) => {// TODO: handle token expired
+Spotify.getPlaylist = (access_token, playlist_id) => {
   return new Promise((resolve, reject) => {
     axios.get(`https://api.spotify.com/v1/playlists/${playlist_id}`, {
       headers: {
@@ -129,6 +129,35 @@ Spotify.getPlaylist = (access_token, playlist_id) => {// TODO: handle token expi
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
             .then(new_access_token => Spotify.getPlaylist(new_access_token, playlist_id))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
+  });
+};
+
+Spotify.getPlaylistTracks = (access_token, playlist_id) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+      .then(response => resolve(response.data) /*Return the requested data*/)
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.getPlaylistTracks(new_access_token, playlist_id))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying
@@ -194,6 +223,38 @@ Spotify.removeTracks = (access_token, playlist_id, tracks) => {
           Spotify.refreshAccessToken()
             //Access token successfully refreshed
             .then(new_access_token => Spotify.removeTracks(new_access_token, playlist_id, tracks))
+            //Successful retry
+            .then(data => resolve(data))
+            //Error refreshing or retrying
+            .catch(err => { console.log('Error retrying to refresh access token'); reject(err); });
+        }
+        else {
+          reject(err);
+        }
+      });
+  });
+};
+
+Spotify.addFollower = (access_token, playlist_id) => {
+  return new Promise((resolve, reject) => {
+    const body = {
+      public: false,
+    };
+    axios.put(`https://api.spotify.com/v1/playlists/${playlist_id}/followers`, body, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+      .then(response => resolve(response.data) /*Return the requested data*/)
+      .catch(err => {
+        //If access token expired, refresh it and try again        
+        if (err.response.data.error.message === 'The access token expired') {
+          console.log('Access token expired, refreshing access token...');
+          Spotify.refreshAccessToken()
+            //Access token successfully refreshed
+            .then(new_access_token => Spotify.addFollower(new_access_token, playlist_id))
             //Successful retry
             .then(data => resolve(data))
             //Error refreshing or retrying

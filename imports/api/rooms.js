@@ -89,11 +89,30 @@ Meteor.methods({
   'rooms.addContributor'(code) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
-    if(!Rooms.findOne({code, 'contributors.id': user.profile.id})) {
-      Rooms.update({code}, {
-        $push: {contributors: user.profile}
+    const room = Rooms.findOne({code});
+    if(!room) return new Meteor.Error('The blend does not exist');
+    if(room.contributors.filter(contr => contr.id===user.profile.id).length === 0) {
+      return new Promise((resolve, reject) => {
+        Spotify.addFollower(user.services.spotify.accessToken, room.id)
+          .then(() => {
+            Rooms.update({code}, {$push: {contributors: user.profile}}, err => {
+              if(err) {
+                console.log(err);
+                reject(err);
+              }
+              else {
+                resolve('Contributor successfully added');
+              }
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            reject(err);
+          });
+
       });
     }
+    return new Meteor.Error('You are already a contributor');
   },
   'rooms.autoUpdateImageCover'(code) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
@@ -139,24 +158,29 @@ Meteor.methods({
     if(!room) return new Meteor.Error('Not Authorized');
     return Spotify.getPlaylist(user.services.spotify.accessToken, room.id);
   },
+  'rooms.getPlaylistTracks'(id) {
+    if(!Meteor.userId()) return new Meteor.Error('Not authorized');
+    const user = Meteor.user();
+    return Spotify.getPlaylistTracks(user.services.spotify.accessToken, id);
+  },
   'rooms.updateRoom'(code) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
-    const room = Rooms.findOne({code, 'owner.id': user.profile.id});
+    const room = Rooms.findOne({code, 'contributors.id': user.profile.id});
     if(!room) return new Meteor.Error('Not Authorized');
     return new Promise((resolve, reject) => {
-      
       Spotify.getPlaylists(user.services.spotify.accessToken)
         .then(res => {
           if(res.items.filter(pl => pl.id === room.id).length === 0) {
-            Rooms.remove({id: room.id}, (err) => {
+            Rooms.update({id: room.id}, {$pull: {contributors: {id: user.profile.id}}}, (err) => {
               if(err) {
                 console.log('wtf');
                 console.log(err);
                 reject(err);
               }
               else {
-                reject(new Meteor.Error('The playlist does not exist'));
+                console.log('vamos');
+                reject(new Meteor.Error('The playlist has been deleted'));
               }
             });
           }
@@ -215,7 +239,6 @@ Meteor.methods({
           console.log(err);
           reject(err);
         });
-
     });
-  }
+  },
 });

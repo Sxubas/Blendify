@@ -22,7 +22,7 @@ class RecentBlend extends React.Component{
       <div 
         tabIndex='0'
         aria-label='go to blend'
-        title='go to blend' 
+        title='go to blend'
         className='recent-blend-container' 
       >
         {(this.props.blend.images && this.props.blend.images.length > 0) ||

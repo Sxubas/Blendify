@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Rooms } from '../../api/rooms.js';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './Blend.css';
 import './Blend.mobile.css';
@@ -20,6 +21,19 @@ class Blend extends Component {
       tracksToRemove: [],
     };
   }
+
+  /*componentDidMount() {
+    if(this.props.room) {
+      console.log(this.props.room);
+      Meteor.call('rooms.updateRoom', this.props.room.code, (err) => {
+        if(err) {
+          console.log(err);
+          alert(err);
+          if(err.error==='The playlist has been deleted') FlowRouter.go('home');
+        }
+      });
+    }
+  }*/
 
   addTracks() {
     //If tracks havent been requested
@@ -68,7 +82,6 @@ class Blend extends Component {
   }
 
   submitTracksToRemove() {
-    console.log(this.state.tracksToRemove);
     Meteor.call('rooms.removeTracks', this.props.room.code, this.state.tracksToRemove, (err) => {
       if(err) {
         console.log(err);
@@ -78,6 +91,7 @@ class Blend extends Component {
         if(err) {
           console.log(err);
           alert(err);
+          if(err.error==='The playlist has been deleted') FlowRouter.go('home');
         }
         this.setState({ edit: false, tracksToRemove: [] });
       });

@@ -1,19 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import './LastBlend.css';
 import './LastBlend.mobile.css';
 
 class LastBlend extends React.Component {
 
+  getImageSrc(blend) {
+    if (blend.images) {
+      for (const image of blend.images) {
+        return image.url;
+      }
+    }
+    //If the playlist has not been assigned a list of images, get the album image of the first song
+    return blend.tracks[0].track.album.images[1].url;
+  }
+
   render() {
     return this.props.blend ? (
       <div className='last-blend-container'>
         <div className='last-top-container'>
-          <div
-            style={{ backgroundImage: this.props.blend.images[0] ? `url(${this.props.blend.images[0].url})` : undefined}}
-            className='last-cover-art'>
-          </div>
+          {(this.props.blend.images && this.props.blend.images.length > 0) ||
+            (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
+            <div 
+              style={{ backgroundImage : `url(${this.getImageSrc(this.props.blend)})`}} 
+              className='last-cover-art' 
+              aria-label='go to blend'
+              title='go to blend'
+              alt="Playlist album covers" 
+              onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}/> :
+            <i 
+              className='material-icons last-blend-cover-icon' 
+              aria-label='go to blend'
+              title='go to blend'
+              onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}> photo</i>
+          }
           <h5>
             {this.props.blend.name}
           </h5>
