@@ -1,7 +1,11 @@
 @media only screen and (max-width: 600px) {
   .last-cover-art{
-    width: 25vw;
-    height: 25vw;
+    width: 20vw;
+    height: 20vw;
     background-size: cover;
+  }
+
+  .last-top-container #last-blend-title{
+    margin-left: 8px;
   }
 }

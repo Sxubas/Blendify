@@ -37,6 +37,8 @@ App.propTypes = {
 export default withTracker(() => {
   // props here will have `main`, passed from the router
   // anything we return from this function will be *added* to it
+  if(Meteor.user())
+    Meteor.subscribe('users', Meteor.user().profile.id);
   return {
     user: Meteor.user(),
   };

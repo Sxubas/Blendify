@@ -5,26 +5,27 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Rooms } from '../../api/rooms.js';
 
 import './Profile.css';
+import './Profile.mobile.css';
 
 class Profile extends Component {
 
   render() {
     return (
-      this.props.user &&
+      this.props.user && this.props.user.services ?
         <div className="profile-container">
-          {this.props.user.images[0] ?
+          {this.props.user.services.spotify.images.length > 0 ?
             <figure
               className='profile-user-avatar'
-              title={this.props.user.display_name}
-              style={{ backgroundImage: `url(${this.props.user.images[0].url})` }}
+              title={this.props.user.services.spotify.display_name}
+              style={{ backgroundImage: `url(${this.props.user.services.spotify.images[0].url})` }}
             >
             </figure> :
             <i className='material-icons nav-user-avatar' title={this.props.user.display_name}>
               account_box
             </i>}
-          <h3>{this.props.user.display_name}</h3>
+          <h3>{this.props.user.services.spotify.display_name}</h3>
           <button className='btn black' onClick={() => Meteor.logout()}>Log out</button>
-        </div>
+        </div> : null
     );
   }
 }
@@ -36,11 +37,9 @@ Profile.propTypes = {
 };
 
 export default withTracker((props) => {
-  Meteor.subscribe('users', props.id);
   Meteor.subscribe('rooms', props.id);
-  const user = Meteor.users.findOne({});
   return {
-    user: user ? user.profile : undefined,
+    user: Meteor.user(),
     history: Rooms.find({}, { sort: { timestamp: -1 } }).fetch(),
   };
 })(Profile);

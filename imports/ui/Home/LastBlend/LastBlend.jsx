@@ -14,7 +14,7 @@ class LastBlend extends React.Component {
             style={{ backgroundImage: this.props.blend.images[0] ? `url(${this.props.blend.images[0].url})` : undefined}}
             className='last-cover-art'>
           </div>
-          <h5>
+          <h5 id='last-blend-title'>
             {this.props.blend.name}
           </h5>
         </div>
