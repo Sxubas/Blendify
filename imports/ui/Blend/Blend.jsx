@@ -51,6 +51,12 @@ class Blend extends Component {
     });
   }
 
+  deleteTrack(uri, i) {
+    this.setState({
+      tracksToRemove: this.state.tracksToRemove.concat([{uri, positions: [i]}])
+    });
+  }
+
   submitTracksToAdd() {
     Meteor.call('rooms.addSongs', this.props.code, this.state.tracksToAdd, (err) => {
       if (err) {
@@ -58,6 +64,23 @@ class Blend extends Component {
         return;
       }
       this.setState({ showTracksToAdd: false });
+    });
+  }
+
+  submitTracksToRemove() {
+    console.log(this.state.tracksToRemove);
+    Meteor.call('rooms.removeTracks', this.props.room.code, this.state.tracksToRemove, (err) => {
+      if(err) {
+        console.log(err);
+        alert(err);
+      }
+      Meteor.call('rooms.updateRoom', this.props.room.code, (err) => {
+        if(err) {
+          console.log(err);
+          alert(err);
+        }
+        this.setState({ edit: false, tracksToRemove: [] });
+      });
     });
   }
 
@@ -144,10 +167,24 @@ class Blend extends Component {
 
           {this.state.edit &&
             (<div className='add-tracks-container'>
-              {this.props.room.tracks.map((tr, i) => {
-
-              })}
-              <button className='btn black' onClick={() => this.setState({ edit: false })}>Cancel</button>
+              {this.props.room.tracks.map((track, i) => 
+                this.state.tracksToRemove.filter(tr => tr.uri===track.track.uri && tr.positions[0]===i).length===0 && 
+                (<div className='track-item-container' key={i}>
+                  <div className='add-track-item'>
+                    <i className='material-icons remove-track' tabIndex='0' onClick={() => this.deleteTrack(track.track.uri, i)}>clear</i>
+                    <div>
+                      <p>{track.track.name}</p>
+                      {this.renderArtists(track.track)}
+                    </div>
+                  </div>
+                  <div className='track-duration'>{this.parseDuration(track.track.duration_ms)}</div>
+                </div>)
+              )}
+              <div className='add-tracks-btn-container'>
+                <button className='btn' onClick={() => this.submitTracksToRemove()}>Save changes</button>
+                <button className='btn black' onClick={() => this.setState({ edit: false })}>Cancel</button>
+              </div>
+              
             </div>)
           }
         </div>
