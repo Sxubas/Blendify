@@ -38,8 +38,9 @@ class TopTracks extends React.Component {
 
     return (
       <div className='top-tracks-container'>
-        <h3>Adding tracks</h3>
+        <h3>Top tracks</h3>
         <hr/>
+        <p className='top-tracks-description'>These are your most listened-to tracks in the last 6 months. Select those which you want to add to this playlist </p>
         <TrackSelector code={this.props.code} tracks={this.state.topTracks} />
       </div>
     );

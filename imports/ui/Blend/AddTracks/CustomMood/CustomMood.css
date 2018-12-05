@@ -10,3 +10,16 @@
   width: calc(100% - 2*32px); /*Remove padding*/
   max-width: 1080px;
 }
+
+.genre-multi-select{
+  width: 100%;
+}
+
+.genre-multi-select .select__multi-value{
+  background-color: rgba(30, 215, 96, 0.72);
+}
+
+.genre-multi-select .select__menu{
+  color: black;
+  z-index: 10;
+}

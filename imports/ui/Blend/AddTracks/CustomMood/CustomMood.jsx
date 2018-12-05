@@ -4,11 +4,18 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Meteor } from 'meteor/meteor';
 
 import MoodParameter from './MoodParameter/MoodParameter.jsx';
+import Loading from '../../../Loading/Loading.jsx';
+import TrackSelector from '../TrackSelector/TrackSelector.jsx';
+
+import Select from 'react-select';
+import genres from './genres.js';
 
 import './CustomMood.css';
 import './CustomMood.mobile.css';
-import Loading from '../../../Loading/Loading.jsx';
-import TrackSelector from '../TrackSelector/TrackSelector.jsx';
+
+const customStyles = {
+  control: styles => ({ ...styles, backgroundColor: 'white', color: 'black', width: '100%'})
+};
 
 class CustomMood extends React.Component {
 
@@ -18,6 +25,7 @@ class CustomMood extends React.Component {
     this.state = {
       loading: false,
       selecting: false,
+      selectedGenres: [],
       moodTracks: [],
       energy: {
         enabled: true,
@@ -66,38 +74,80 @@ class CustomMood extends React.Component {
     this.setState(update);
   }
 
-  moodSearch(){
-    this.setState({loading: true});
-    Meteor.call('rooms.getRecommendations', 'classical,rock,anime', 
-      this.state.acousticness.enabled?this.state.acousticness.value/100.0:undefined, 
-      this.state.dance.enabled?this.state.dance.value/100.0:undefined,
-      this.state.energy.enabled?this.state.energy.value:undefined, 
-      this.state.instrumentalness.enabled?this.state.instrumentalness.value/100.0:undefined, 
-      this.state.popularity.enabled?this.state.popularity.value:undefined, 
-      this.state.speechiness.enabled?this.state.speechiness.value/100.0:undefined, 
-      this.state.happiness.enabled?this.state.happiness.value/100.0:undefined, (err, res) => {
-        if(err) {
+  buildGenreString(){
+    let string = '';
+
+    for(const genre of this.state.selectedGenres){
+      string += genre.value + ',';
+    }
+
+    string = string.substring(0, string.length-1);
+
+    return string;
+  }
+
+  moodSearch() {
+    this.setState({ loading: true });
+    const genres = this.buildGenreString();
+    Meteor.call('rooms.getRecommendations', genres,
+      this.state.acousticness.enabled ? this.state.acousticness.value / 100.0 : undefined,
+      this.state.dance.enabled ? this.state.dance.value / 100.0 : undefined,
+      this.state.energy.enabled ? this.state.energy.value : undefined,
+      this.state.instrumentalness.enabled ? this.state.instrumentalness.value / 100.0 : undefined,
+      this.state.popularity.enabled ? this.state.popularity.value : undefined,
+      this.state.speechiness.enabled ? this.state.speechiness.value / 100.0 : undefined,
+      this.state.happiness.enabled ? this.state.happiness.value / 100.0 : undefined, (err, res) => {
+        if (err) {
           console.log(err);
           alert('error fetching data');
           FlowRouter.go(`/blend/${this.props.code}`);
         }
         else {
-          console.log(res);
-          this.setState({moodTracks: res.tracks, loading: false, selecting: true});
+          this.setState({ moodTracks: res.tracks, loading: false, selecting: true });
         }
-      }); 
-    
+      });
+
   }
 
   render() {
-    if(this.state.loading)
-      return(<Loading />);
-    else if(this.state.selecting)
-      return(<TrackSelector code={this.props.code} tracks={this.state.moodTracks}/>);
+    if (this.state.loading)
+      return (<Loading />);
+    else if (this.state.selecting)
+      return (
+        <div className='custom-mood-container'>
+          <h3>Mood results</h3>
+          <hr />
+          <TrackSelector code={this.props.code} tracks={this.state.moodTracks} />
+        </div>
+      );
     return (
       <div className='custom-mood-container'>
         <h3>Custom mood</h3>
         <hr />
+
+        <p>Pick between 1 and 5 genres to search songs for</p>
+
+        <Select
+          ref={sel => this.sel = sel}
+          onChange={(option) => {
+            if(option.length <= 5)
+              this.setState({ selectedGenres: option})
+            else
+              this.sel.blur();
+          }}
+          value={this.state.selectedGenres}          
+          isMulti
+          isSearchable
+          closeMenuOnSelect={false}
+          openMenuOnClick={true}
+          openMenuOnFocus={true}
+          placeholder="Select genres"
+          styles={customStyles}
+          options={genres}
+          className="genre-multi-select"
+          classNamePrefix="select"
+        />
+
         <p>Choose and tweak which parameters do you want to query songs for</p>
 
         <MoodParameter title="Happiness"
@@ -155,10 +205,10 @@ class CustomMood extends React.Component {
           value={this.state.speechiness.value}
           onChange={(e) => this.onChangeGenerator(e, 'speechiness')}
           minLabel='Music' maxLabel='Speech' />
-      
+
         <div className='mood-parameter-buttons'>
           <button className='btn black' onClick={() => FlowRouter.go(`/blend/${this.props.code}/add_tracks`)}>Cancel</button>
-          <button className='btn' onClick={() => this.moodSearch()}>Search tracks</button>
+          <button className='btn' disabled={this.state.selectedGenres.length === 0} onClick={() => this.moodSearch()}>Search tracks</button>
         </div>
       </div>
     );
