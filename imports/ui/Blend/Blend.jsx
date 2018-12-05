@@ -16,16 +16,8 @@ class Blend extends Component {
     super(props);
     this.state = {
       showingContributors: false,
-      showTracksToAdd: false,
-      edit: false,
-      tracksToAdd: [],
       tracksRetrieved: [],
-      tracksToRemove: [],
     };
-  }
-
-  edit() {
-    this.setState({ showTracksToAdd: false, edit: true, tracksToRemove: [] });
   }
 
   deleteTrackToAdd(i) {
@@ -39,23 +31,6 @@ class Blend extends Component {
   deleteTrack(uri, i) {
     this.setState({
       tracksToRemove: this.state.tracksToRemove.concat([{ uri, positions: [i] }])
-    });
-  }
-
-  submitTracksToRemove() {
-    Meteor.call('rooms.removeTracks', this.props.room.code, this.state.tracksToRemove, (err) => {
-      if (err) {
-        console.log(err);
-        alert(err);
-      }
-      Meteor.call('rooms.updateRoom', this.props.room.code, (err) => {
-        if (err) {
-          console.log(err);
-          alert(err);
-          if (err.error === 'The playlist has been deleted') FlowRouter.go('home');
-        }
-        this.setState({ edit: false, tracksToRemove: [] });
-      });
     });
   }
 

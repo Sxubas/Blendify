@@ -57,6 +57,10 @@ class TrackSelector extends React.Component {
     console.log(tracksToAdd);
   }
 
+  removeTracks(){
+    
+  }
+
   render() {
     return (
       <div className='track-selector-container'>
@@ -76,7 +80,9 @@ class TrackSelector extends React.Component {
 
         <div className='track-selector-top-buttons'>
           <button className='btn black' onClick={() => FlowRouter.go(`/blend/${this.props.code}`)}>Cancel</button>
-          <button className='btn' onClick={() => this.addTracks()}>Add tracks</button>
+          <button className='btn' onClick={this.props.removing ? () => this.removeTracks() : () => this.addTracks()}>
+            {this.props.removing ? 'Remove tracks' : 'Add tracks'}
+          </button>
         </div>
       </div>
     );
@@ -86,7 +92,8 @@ class TrackSelector extends React.Component {
 
 TrackSelector.propTypes = {
   code: PropTypes.string.isRequired,
-  tracks: PropTypes.array.isRequired
+  tracks: PropTypes.array.isRequired,
+  removing: PropTypes.bool
 };
 
 export default TrackSelector;
