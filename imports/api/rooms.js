@@ -134,10 +134,10 @@ Meteor.methods({
     const user = Meteor.user();
     return Spotify.getAvailableGenres(user.services.spotify.accessToken);
   },
-  'rooms.getRecommendations'(genres, acousticness, danceability, energy, instrumentalness, popularity, speechiness, valence) {
+  'rooms.getRecommendations'(artists, genres, acousticness, danceability, energy, instrumentalness, popularity, speechiness, valence) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
-    return Spotify.getRecommendations(user.services.spotify.accessToken, genres, acousticness, danceability, energy, instrumentalness, popularity, speechiness, valence);
+    return Spotify.getRecommendations(user.services.spotify.accessToken, artists, genres, acousticness, danceability, energy, instrumentalness, popularity, speechiness, valence);
   },
   'rooms.getPlaylists'() {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');

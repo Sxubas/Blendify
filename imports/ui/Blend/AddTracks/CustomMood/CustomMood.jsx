@@ -89,7 +89,7 @@ class CustomMood extends React.Component {
   moodSearch() {
     this.setState({ loading: true });
     const genres = this.buildGenreString();
-    Meteor.call('rooms.getRecommendations', genres,
+    Meteor.call('rooms.getRecommendations', undefined, genres,
       this.state.acousticness.enabled ? this.state.acousticness.value / 100.0 : undefined,
       this.state.dance.enabled ? this.state.dance.value / 100.0 : undefined,
       this.state.energy.enabled ? this.state.energy.value : undefined,
