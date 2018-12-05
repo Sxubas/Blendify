@@ -27,8 +27,7 @@ class TopTracks extends React.Component {
         alert(err);
         return;
       }
-      Meteor.call('rooms.autoUpdateImageCover', this.props.code);
-      this.setState({ loading: false, topTracks: res.items });
+      Meteor.call('rooms.updateRoom', this.props.code, () => this.setState({ loading: false, topTracks: res.items }));
     });
   }
 
