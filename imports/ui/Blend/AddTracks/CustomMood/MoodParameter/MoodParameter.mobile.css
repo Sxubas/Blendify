@@ -1,3 +1,35 @@
 @media only screen and (max-width: 600px) {
-  
+  .mood-parameter-container{
+    width: 100%;
+    border-bottom: 1px rgba( 245, 245, 245, 0.1) solid;
+    padding-bottom: 6px;
+  }
+
+  .mood-parameter-container .mood-parameter-top h4{
+    margin-bottom: 2px;
+  }
+
+  .mood-parameter-container .mood-parameter-top p{
+    margin-bottom: 4px;
+  }
+
+  .mood-parameter-range{
+    width: calc(100% * 3/4);
+    margin-left: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mood-parameter-range-label{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% * 3/4 + 16px);
+    font-size: 0.92rem;
+  }
+
+  .mood-parameter-buttons{
+    margin-top: 8px;
+  }
 }
