@@ -17,6 +17,7 @@ class Navigation extends Component {
         <nav className='app-nav' role='navigation'>
           <div className='nav-top-container'>
             <div className='title-logo-container'>
+              //olvidaron el alt de la imagen para el logo
               <a href='/'><img src='/assets/logo.png'></img></a>
               <div>
                 <h1 onClick={() => FlowRouter.go('home')}>Blendify</h1>
