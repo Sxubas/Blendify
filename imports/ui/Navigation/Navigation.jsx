@@ -44,18 +44,18 @@ class Navigation extends Component {
           {this.props.user &&
             <div className='nav-bottom-container'>
               <a href={`/profile/${this.props.user.profile.id}`} className='nav-user-link'>
-                {this.props.user.profile.images[0] ?
+                {(this.props.user.services && this.props.user.services.spotify.images && this.props.user.services.spotify.images.length>0) ?
                   <figure
                     className='nav-user-avatar'
                     title={this.props.user.profile.display_name}
-                    style={{ backgroundImage: `url(${this.props.user.profile.images[0].url})` }}
+                    style={{ backgroundImage: `url(${this.props.user.services.spotify.images[0].url})` }}
                   >
                   </figure> :
                   <i className='nav-user-avatar material-icons' title={this.props.user.profile.display_name}>
                     account_box
                   </i>}
                 <span className={FlowRouter.getRouteName() === 'profile' ? 'selected' : ''}>
-                  {this.props.user.profile.display_name}
+                  {this.props.user.services && this.props.user.services.spotify.display_name}
                 </span>
               </a>
             </div>}

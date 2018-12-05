@@ -60,7 +60,7 @@ class Blends extends Component {
 
         <div className='blends-history-container'>
           {this.props.history && this.props.history.map(blend =>
-            this.props.user && ((blend.owner.id===this.props.user.id && this.state.showingCreated) || (blend.owner.id!==this.props.user.id && this.state.showingJoined)) && (<BlendItem 
+            this.props.user && ((blend.owner.id===this.props.user.profile.id && this.state.showingCreated) || (blend.owner.id!==this.props.user.profile.id && this.state.showingJoined)) && (<BlendItem 
               blend={blend}
               key={blend._id}
               selectedBlend={this.state.selectedBlend}
@@ -79,10 +79,10 @@ Blends.propTypes = {
 };
 
 export default withTracker(() => {
-  let user = Meteor.user();
+  const user = Meteor.user();
   if (user) {
-    user = user.profile;
-    Meteor.subscribe('rooms', user.id);
+    //user = user.profile;
+    Meteor.subscribe('rooms', user.profile.id);
   }
   return {
     user,

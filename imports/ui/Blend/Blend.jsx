@@ -139,8 +139,8 @@ class Blend extends Component {
 
             {this.state.showingContributors && this.renderContributors()}
 
-            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.addTracks()} className='btn white small'>add tracks</button>}
-            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.edit()} className='btn white small'>edit</button>}
+            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.addTracks()} className='btn white small'>Add tracks</button>}
+            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.edit()} className='btn white small'>Remove tracks</button>}
           </div>
         </div>
         <div className='track-list-container'>
@@ -257,6 +257,7 @@ Blend.propTypes = {
 
 export default withTracker((props) => {
   Meteor.subscribe('singleRoom', props.code);
+  Meteor.subscribe('users', props.id);
   return {
     user: Meteor.user(),
     room: Rooms.findOne({}),

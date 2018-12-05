@@ -75,6 +75,13 @@ body, #app{
   font-weight: 500;
 }
 
+.app-container .app-content-container h2::first-letter,
+.app-container .app-content-container h3::first-letter,
+.app-container .app-content-container h4::first-letter,
+.app-container .app-content-container h5::first-letter{
+  text-transform: capitalize;
+}
+
 .app-container .app-content-container a, .app-container .app-content-container a:visited{
   color: #b6ffd0;
 }
@@ -99,6 +106,7 @@ html .app-container .btn {
   padding: 4px 16px;
   margin: 4px;
   transition: all 66ms linear;
+  cursor: pointer;
 }
 
 html .app-container .btn.black{

@@ -1,0 +1,38 @@
+.adding-method-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 6px 0;
+  transition: all 64ms ease-in;
+}
+
+.adding-method-container i{
+  font-size: 2.8rem;
+  transition: all 128ms ease-in-out;
+}
+
+.adding-method-content{
+  display: flex;
+  flex-direction: column;
+  margin-left: 4px;
+}
+
+.adding-method-container .adding-method-content h4{
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.adding-method-content p{
+  margin: 0;
+}
+
+.adding-method-container:hover{
+  cursor: pointer;
+  background-color: rgba(244,244,244, 0.08);
+  box-shadow: 0 0 6px 4px rgba(244,244,244, 0.08);
+}
+
+.adding-method-container:hover i{
+  color: #1ed760;
+}

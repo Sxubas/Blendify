@@ -36,7 +36,7 @@ class LastBlend extends React.Component {
               title='go to blend'
               onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}> photo</i>
           }
-          <h5>
+          <h5 id='last-blend-title'>
             {this.props.blend.name}
           </h5>
         </div>

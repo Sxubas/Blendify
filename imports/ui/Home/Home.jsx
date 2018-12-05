@@ -67,14 +67,14 @@ Home.propTypes = {
 export default withTracker(() => {
   // props here will have `main`, passed from the router
   // anything we return from this function will be *added* to it
-  let user = Meteor.user();
+  const user = Meteor.user();
   if (user) {
-    user = user.profile;
-    Meteor.subscribe('rooms', user.id);
+    //user = user.profile;
+    Meteor.subscribe('rooms', user.profile.id);
   }
   return {
     user,
     recent: Rooms.find({}, { sort: { timestamp: -1 }, limit: 5 }).fetch(),
-    last: user ? Rooms.findOne({'owner.id': user.id}, {sort: {timestamp: -1}}) : undefined,
+    last: user ? Rooms.findOne({'owner.id': user.profile.id}, {sort: {timestamp: -1}}) : undefined,
   };
 })(Home);
