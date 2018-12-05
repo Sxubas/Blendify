@@ -1,4 +1,4 @@
-.custom-mood-container{
+.top-tracks-container{
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -9,4 +9,4 @@
   margin: 0 auto;
   width: calc(100% - 2*32px); /*Remove padding*/
   max-width: 1080px;
-} 
+}

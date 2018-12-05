@@ -45,8 +45,8 @@ class CreateBlend extends React.Component {
             <textarea className='create-description' maxLength="300" ref={ref => this.descInput = ref} />
           </label>
           <div>
-            <button className='btn' type="submit">Create</button>            
             <button className='btn black' onClick={() => window.history.back()}>Cancel</button>
+            <button className='btn' type="submit">Create</button>            
           </div>
         </form>
       </div>

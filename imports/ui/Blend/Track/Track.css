@@ -1,0 +1,48 @@
+.track-item-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 6px;
+  border-bottom: 1px rgba( 245, 245, 245, 0.1) solid;
+  border-top: 1px rgba( 245, 245, 245, 0.1) solid;
+  transition: all 108ms ease-in-out;
+}
+
+.track-item-container.selectable{
+  cursor: pointer;
+}
+
+.track-item-container.selectable:hover{
+  background-color: rgba(244,244,244, 0.2);
+}
+
+.track-item-container p{
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.track-item-container .artists-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: -6px;
+  white-space: pre;
+}
+
+.track-item-container a{
+  font-size: 0.8rem;
+  color: rgb(194, 194, 194);
+  transition: all 0.12s ease-in;
+}
+
+.track-item-container a:hover{
+  color: whitesmoke;
+}
+
+.track-right-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

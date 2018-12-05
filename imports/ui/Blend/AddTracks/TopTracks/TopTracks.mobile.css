@@ -1,8 +1,9 @@
 @media only screen and (max-width: 600px) {
 
-  .from-playlist-container{
+  .top-tracks-container{
     height: auto;
     padding-bottom: 8px;
     margin-bottom: 54px;
   }
+
 }

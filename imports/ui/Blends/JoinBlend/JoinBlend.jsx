@@ -46,8 +46,8 @@ class JoinBlend extends React.Component {
           />
           {this.invalidCode() && <p role='alert'>The code should have the format: XX999</p>}
           <div>
-            <button aria-label="Join Blend" className='btn' type="submit" disabled={this.invalidCode()}>Join blend</button>
             <button aria-label="Cancel" className='btn black' onClick={() => window.history.back()}>Cancel</button>
+            <button aria-label="Join Blend" className='btn' type="submit" disabled={this.invalidCode()}>Join blend</button>
           </div>
         </form>
       </div>

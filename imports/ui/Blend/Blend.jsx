@@ -5,6 +5,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Rooms } from '../../api/rooms.js';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import Track from './Track/Track.jsx';
+
 import './Blend.css';
 import './Blend.mobile.css';
 
@@ -22,37 +24,6 @@ class Blend extends Component {
     };
   }
 
-  /*componentDidMount() {
-    if(this.props.room) {
-      console.log(this.props.room);
-      Meteor.call('rooms.updateRoom', this.props.room.code, (err) => {
-        if(err) {
-          console.log(err);
-          alert(err);
-          if(err.error==='The playlist has been deleted') FlowRouter.go('home');
-        }
-      });
-    }
-  }*/
-
-  addTracks() {
-    //If tracks havent been requested
-    if (this.state.tracksRetrieved.length === 0) {
-      Meteor.call('users.getTopTracks', (err, res) => {
-        if (err) {
-          alert(err);
-          return;
-        }
-        Meteor.call('rooms.autoUpdateImageCover', this.props.code);
-        this.setState({ showTracksToAdd: true, edit: false, tracksToAdd: res.items, tracksRetrieved: res.items.slice() });
-      });
-    }
-    //Tracks have already been fetched, do not call API
-    else {
-      this.setState({ showTracksToAdd: true, edit: false, tracksToAdd: this.state.tracksRetrieved.slice() });
-    }
-  }
-
   edit() {
     this.setState({ showTracksToAdd: false, edit: true, tracksToRemove: [] });
   }
@@ -67,31 +38,21 @@ class Blend extends Component {
 
   deleteTrack(uri, i) {
     this.setState({
-      tracksToRemove: this.state.tracksToRemove.concat([{uri, positions: [i]}])
-    });
-  }
-
-  submitTracksToAdd() {
-    Meteor.call('rooms.addSongs', this.props.code, this.state.tracksToAdd, (err) => {
-      if (err) {
-        alert(err);
-        return;
-      }
-      this.setState({ showTracksToAdd: false });
+      tracksToRemove: this.state.tracksToRemove.concat([{ uri, positions: [i] }])
     });
   }
 
   submitTracksToRemove() {
     Meteor.call('rooms.removeTracks', this.props.room.code, this.state.tracksToRemove, (err) => {
-      if(err) {
+      if (err) {
         console.log(err);
         alert(err);
       }
       Meteor.call('rooms.updateRoom', this.props.room.code, (err) => {
-        if(err) {
+        if (err) {
           console.log(err);
           alert(err);
-          if(err.error==='The playlist has been deleted') FlowRouter.go('home');
+          if (err.error === 'The playlist has been deleted') FlowRouter.go('home');
         }
         this.setState({ edit: false, tracksToRemove: [] });
       });
@@ -108,13 +69,6 @@ class Blend extends Component {
     return blend.tracks[0].track.album.images[1].url;
   }
 
-  parseDuration(durationMs) {
-    const mins = Math.floor(durationMs / 1000.0 / 60);
-    let secs = Math.ceil((durationMs / 1000.0 / 60 - mins) * 60);
-    if (secs < 10) secs = '0' + secs;
-    return `${mins}:${secs}`;
-  }
-
   render() {
     return (this.props.room ?
       <div className="blend-container">
@@ -123,86 +77,36 @@ class Blend extends Component {
           {(this.props.room.images && this.props.room.images.length > 0) ||
             (this.props.room.tracks && this.props.room.tracks.length > 0) ?
             <img src={this.getImageSrc(this.props.room)} className='blend-title-image' alt="Playlist image" /> :
-            <i className='material-icons blend-title-image'>photo</i>
-          }
-          <div className='blend-title-text'>
+            <i className='material-icons blend-title-image'>photo</i>}
 
+          <div className='blend-title-text'>
             <h3 className="blend-name">{this.props.room.name}</h3>
-            <span>Created by <a href={`/profile/${this.props.room.owner.id}`}>{this.props.room.owner.display_name}</a></span>
-            
+            <span>
+              Created by 
+              <a href={`/profile/${this.props.room.owner.id}`}>{this.props.room.owner.display_name}</a>
+            </span>
+
             {/* Contributors rendering */}
             {this.props.room.contributors.length > 1 ?
-              <span className='blend-title-contributors' onClick={() => this.setState({ showingContributors: !this.state.showingContributors })}>
-                {this.state.showingContributors ? 'Hide contributors' : `${this.props.room.contributors.length} Contributors`}
+              <span
+                className='blend-title-contributors'
+                onClick={() => this.setState({ showingContributors: !this.state.showingContributors })}>
+                {this.state.showingContributors ? 'Hide contributors' : `${this.props.room.contributors.length - 1} Contributors`}
               </span> :
               <span>No contributors yet</span>}
 
             {this.state.showingContributors && this.renderContributors()}
 
-            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.addTracks()} className='btn white small'>Add tracks</button>}
-            {!this.state.showTracksToAdd && !this.state.edit && <button onClick={() => this.edit()} className='btn white small'>Remove tracks</button>}
+            <button onClick={() => FlowRouter.go(`/blend/${this.props.code}/add_tracks`)} className='btn white'>Add tracks</button>
+            <button onClick={() => FlowRouter.go(`/blend/${this.props.code}/remove_tracks`)} className='btn white'>Remove tracks</button>
           </div>
         </div>
+
         <div className='track-list-container'>
-
-          {this.state.showTracksToAdd &&
-            <div className='add-tracks-container'>
-              {this.state.tracksToAdd.map((track, i) =>
-                <div className='track-item-container' key={i}>
-                  <div className='add-track-item'>
-                    <i className='material-icons remove-track' tabIndex='0' onClick={() => this.deleteTrackToAdd(i)}>clear</i>
-                    <div>
-                      <p>{i + 1}. {track.name}</p>
-                      {this.renderArtists(track)}
-                    </div>
-                  </div>
-                  <div className='track-duration'>{this.parseDuration(track.duration_ms)}</div>
-                </div>
-              )}
-              <div className='add-tracks-btn-container'>
-                <button className='btn' onClick={() => this.submitTracksToAdd()}>Add tracks</button>
-                <button className='btn black' onClick={() => this.setState({ showTracksToAdd: false })}>Cancel</button>
-              </div>
-            </div>}
-
-          {!this.state.showTracksToAdd && !this.state.edit && /*Do not show when adding tracks*/
-            (this.props.room.tracks && this.props.room.tracks.length > 0 ?
-              this.props.room.tracks.map((track, i) =>
-                <div className='track-item-container' key={i}>
-                  <div>
-                    <p>{track.track.name}</p>
-                    {this.renderArtists(track.track)}
-                  </div>
-                  <div className='track-duration'>{this.parseDuration(track.track.duration_ms)}</div>
-                </div>
-              ) :
-              <p>There are not songs in the list yet.</p>)
-          }
-
-          {this.state.edit &&
-            (<div className='add-tracks-container'>
-              {this.props.room.tracks.map((track, i) => 
-                this.state.tracksToRemove.filter(tr => tr.uri===track.track.uri && tr.positions[0]===i).length===0 && 
-                (<div className='track-item-container' key={i}>
-                  <div className='add-track-item'>
-                    <i className='material-icons remove-track' tabIndex='0' onClick={() => this.deleteTrack(track.track.uri, i)}>clear</i>
-                    <div>
-                      <p>{track.track.name}</p>
-                      {this.renderArtists(track.track)}
-                    </div>
-                  </div>
-                  <div className='track-duration'>{this.parseDuration(track.track.duration_ms)}</div>
-                </div>)
-              )}
-              <div className='add-tracks-btn-container'>
-                <button className='btn' onClick={() => this.submitTracksToRemove()}>Save changes</button>
-                <button className='btn black' onClick={() => this.setState({ edit: false })}>Cancel</button>
-              </div>
-              
-            </div>)
-          }
+          {this.props.room.tracks.map((track, i) =>
+            <Track track={track.track} key={i} />)}
         </div>
-      </div> : null
+      </div> : null /* Necessary due to withTracker */
     );
   }
 
@@ -221,27 +125,6 @@ class Blend extends Component {
               <div key={contr.display_name}><a href={`profile/${contr.display_name}`}>{contr.display_name}</a>, </div>
             );
           }
-        })}
-      </div>
-    );
-  }
-
-  renderArtists(track) {
-    return (
-      <div className='artists-container'>
-        {track.artists.map((artist, i) => {
-          if (i === track.artists.length - 1) {
-            return (
-              <div key={artist.id}>
-                <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name}</a>
-              </div>
-            );
-          }
-
-          return (
-            <div key={artist.id}>
-              <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name}</a>, </div>
-          );
         })}
       </div>
     );
