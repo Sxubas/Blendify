@@ -134,10 +134,10 @@ Meteor.methods({
     const user = Meteor.user();
     return Spotify.getAvailableGenres(user.services.spotify.accessToken);
   },
-  'rooms.getRecommendations'(genres) {
+  'rooms.getRecommendations'(genres, acousticness, danceability, energy, instrumentalness, popularity, speechiness, valence) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
     const user = Meteor.user();
-    return Spotify.getRecommendations(user.services.spotify.accessToken, genres);
+    return Spotify.getRecommendations(user.services.spotify.accessToken, genres, acousticness, danceability, energy, instrumentalness, popularity, speechiness, valence);
   },
   'rooms.getPlaylists'() {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
@@ -149,7 +149,7 @@ Meteor.methods({
     const user = Meteor.user();
     const room = Rooms.findOne({code, 'contributors.id': user.profile.id});
     if(!room) return new Meteor.Error('Not Authorized');
-    Spotify.removeTracks(user.services.spotify.accessToken, room.id, uris);
+    return Spotify.removeTracks(user.services.spotify.accessToken, room.id, uris);
   },
   'rooms.getPlaylist'(code) {
     if(!Meteor.userId()) return new Meteor.Error('Not authorized');
