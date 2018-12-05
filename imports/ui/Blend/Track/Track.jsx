@@ -25,18 +25,26 @@ class Track extends React.Component {
     return (
       <div className='artists-container'>
         {track.artists && track.artists.map((artist, i) => {
-          if (i === track.artists.length - 1) {
+          if (i === track.artists.length - 1 && i<=4) {
             return (
               <div key={artist.id}>
-                <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name}</a>
+                <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name.length>23 ? artist.name.substring(0,21)+'...' : artist.name}</a>
               </div>
             );
           }
-
-          return (
-            <div key={artist.id}>
-              <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name}</a>, </div>
-          );
+          else if(i===4) {
+            return (
+              <div key={artist.id}>
+                <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name.length>23 ? artist.name.substring(0,21)+'...' : artist.name}</a>
+                <span>, ...</span>
+              </div>
+            );
+          }
+          else if(i<=4)
+            return (
+              <div key={artist.id}>
+                <a href={`https://open.spotify.com/artist/${artist.id}`} target="_blank" rel="noopener noreferrer">{artist.name.length>23 ? artist.name.substring(0,21)+'...' : artist.name}</a>, </div>
+            );
         })}
       </div>
     );

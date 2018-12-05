@@ -47,8 +47,8 @@ class TrackSelector extends React.Component {
             console.log(err);
             alert(err);
           }
-          FlowRouter.go(`/blend/${this.props.code}`);
         });
+        FlowRouter.go(`/blend/${this.props.code}`);
       });
     }
     else {
@@ -79,7 +79,7 @@ class TrackSelector extends React.Component {
         </div>
 
         <div className='track-selector-top-buttons'>
-          <button className='btn black' onClick={() => FlowRouter.go(`/blend/${this.props.code}`)}>Cancel</button>
+          <button className='btn black' onClick={() => FlowRouter.go(`/blend/${this.props.code}/add_tracks`)}>Cancel</button>
           <button className='btn' onClick={this.props.removing ? () => this.removeTracks() : () => this.addTracks()}>
             {this.props.removing ? 'Remove tracks' : 'Add tracks'}
           </button>
