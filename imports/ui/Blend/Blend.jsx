@@ -57,9 +57,9 @@ class Blend extends Component {
           <div className='blend-title-text'>
             <h3 className="blend-name">{this.props.room.name}</h3>
             <span>
-              Created by 
-              <a href={`/profile/${this.props.room.owner.id}`}>{this.props.room.owner.display_name}</a>
+              Created by <a href={`/profile/${this.props.room.owner.id}`}>{this.props.room.owner.display_name}</a>
             </span>
+            <span>Sharing code: <b>{this.props.room.code}</b></span>
 
             {/* Contributors rendering */}
             {this.props.room.contributors.length > 1 ?

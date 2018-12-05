@@ -23,7 +23,9 @@ if(Meteor.isServer) {
     return Rooms.find({'contributors.id': user});
   });
   Meteor.publish('singleRoom', code => {
-    return Rooms.find({code});
+    if(!Meteor.userId) return new Meteor.Error('Not authorized');
+    const user = Meteor.user().profile.id;
+    return Rooms.find({code, 'contributors.id': user});
   });
   Meteor.publish('myRooms', () => {
     if(!Meteor.userId) return new Meteor.Error('Not authorized');
