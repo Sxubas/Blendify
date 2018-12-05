@@ -46,6 +46,7 @@ class TrackSelector extends React.Component {
           if(err) {
             console.log(err);
             alert(err);
+            if (err.error === 'The playlist has been deleted') FlowRouter.go('home');
           }
         });
         FlowRouter.go(`/blend/${this.props.code}`);
@@ -58,7 +59,32 @@ class TrackSelector extends React.Component {
   }
 
   removeTracks(){
-    
+    let tracksToRemove = this.props.tracks.map((track, i) => {
+      return {
+        uri: track.uri,
+        positions: [i],
+      };
+    });
+    tracksToRemove = tracksToRemove.filter((_, i) => this.state.selectedTracks[i]);
+    if(tracksToRemove.length>0) {
+      Meteor.call('rooms.removeTracks', this.props.code, tracksToRemove, (err) => {
+        if(err) {
+          console.log(err);
+        }
+        Meteor.call('rooms.updateRoom', this.props.code, (err) => {
+          if(err) {
+            console.log(err);
+            alert(err);
+            if (err.error === 'The playlist has been deleted') FlowRouter.go('home');
+          }
+        });
+        FlowRouter.go(`/blend/${this.props.code}`);
+      });
+    }
+    else {
+      FlowRouter.go(`/blend/${this.props.code}`);
+    }
+    console.log(tracksToRemove);
   }
 
   render() {

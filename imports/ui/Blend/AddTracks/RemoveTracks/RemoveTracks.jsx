@@ -18,8 +18,6 @@ class RemoveTracks extends React.Component {
     this.state = {
 
     };
-
-    this.spreadTracks.bind(this);
   }
 
 
@@ -35,7 +33,6 @@ class RemoveTracks extends React.Component {
           alert(err);
           if (err.error === 'The playlist has been deleted') FlowRouter.go('home');
         }
-        this.setState({ edit: false, tracksToRemove: [] });
       });
     });
   }
