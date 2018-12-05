@@ -20,6 +20,14 @@ class Blends extends Component {
     };
   }
 
+  componentDidMount() {
+    for(const blend of this.props.history) {
+      Meteor.call('rooms.updateRoom', blend.code, (err) => {
+        if(err) console.log(err);
+      });
+    }
+  }
+
   render() {
     return (
       <div className='blends-container'>

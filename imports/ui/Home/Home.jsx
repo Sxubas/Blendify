@@ -16,6 +16,14 @@ class Home extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    for(const blend of this.props.recent) {
+      Meteor.call('rooms.updateRoom', blend.code, (err) => {
+        if(err) console.log(err);
+      });
+    }
+  }
+
   test() {
     Meteor.call('rooms.getPlaylists', (err, res) => {
       if(err) {
@@ -28,7 +36,6 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.props.recent);
     return (
       <div className='home-container'>
         <h3>Home</h3>

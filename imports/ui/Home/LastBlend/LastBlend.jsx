@@ -20,21 +20,18 @@ class LastBlend extends React.Component {
   render() {
     return this.props.blend ? (
       <div className='last-blend-container'>
-        <div className='last-top-container'>
+        <div className='last-top-container' 
+          onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)} 
+          aria-label='go to blend'
+          title='go to blend'>
           {(this.props.blend.images && this.props.blend.images.length > 0) ||
             (this.props.blend.tracks && this.props.blend.tracks.length > 0) ?
             <div 
               style={{ backgroundImage : `url(${this.getImageSrc(this.props.blend)})`}} 
-              className='last-cover-art' 
-              aria-label='go to blend'
-              title='go to blend'
-              alt="Playlist album covers" 
-              onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}/> :
+              className='last-cover-art'
+              alt="Playlist album covers"/> :
             <i 
-              className='material-icons last-blend-cover-icon' 
-              aria-label='go to blend'
-              title='go to blend'
-              onClick={() => FlowRouter.go(`/blend/${this.props.blend.code}`)}> photo</i>
+              className='material-icons last-blend-cover-icon'> photo</i>
           }
           <h5 id='last-blend-title'>
             {this.props.blend.name}

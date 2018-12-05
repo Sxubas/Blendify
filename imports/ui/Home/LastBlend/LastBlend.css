@@ -13,6 +13,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
 }
 
 .last-cover-art{
@@ -20,7 +21,6 @@
   height: 16vw;
   background-size: cover;
   flex-shrink: 0;
-  cursor: pointer;
 }
 
 .last-blend-cover-icon{
@@ -28,7 +28,6 @@
   box-sizing: border-box;
   height: 16vw;
   border: 1px whitesmoke solid;
-  cursor: pointer;
 }
 
 .last-bottom-container p{
