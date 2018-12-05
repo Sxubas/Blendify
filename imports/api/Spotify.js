@@ -296,12 +296,19 @@ Spotify.getAvailableGenres = (access_token) => {
   });
 };
 
-Spotify.getRecommendations = (access_token, seed_genres) => {
+Spotify.getRecommendations = (access_token, seed_genres, target_acousticness, target_danceability, target_energy, target_instrumentalness, target_popularity, target_speechiness, target_valence) => {
   //https://api.spotify.com/v1/recommendations
   return new Promise((resolve, reject) => {
     axios.get('https://api.spotify.com/v1/recommendations', {
       params: {
-        seed_genres
+        seed_genres,
+        target_acousticness,
+        target_danceability,
+        target_energy,
+        target_instrumentalness,
+        target_popularity,
+        target_speechiness,
+        target_valence,
       },
       headers: {
         Accept: 'application/json',
