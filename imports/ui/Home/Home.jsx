@@ -24,24 +24,12 @@ class Home extends React.Component {
     }
   }
 
-  test() {
-    Meteor.call('rooms.getPlaylists', (err, res) => {
-      if(err) {
-        console.log('yaper prro');
-        console.log(err);
-        return;
-      }
-      console.log(res);
-    });
-  }
-
   render() {
     return (
       <div className='home-container'>
         <h3>Home</h3>
         <hr />
         <h4>Recently joined</h4>
-        <button onClick={() => this.test()}>test method</button>
         <div className='recent-blends-container'>
           {this.props.recent && this.props.recent.map(el =>
             <RecentBlend key={el._id} blend={el} />
