@@ -143,5 +143,3 @@ FlowRouter.notFound = {
     });
   }
 };
-
-registerServiceWorker();
