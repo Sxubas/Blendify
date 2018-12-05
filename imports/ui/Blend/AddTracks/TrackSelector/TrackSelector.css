@@ -1,0 +1,9 @@
+.track-selector-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.track-selector-top-buttons{
+  margin: 2px 0;
+}

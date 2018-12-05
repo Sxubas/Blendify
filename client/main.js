@@ -9,11 +9,12 @@ import Blends from '../imports/ui/Blends/Blends.jsx';
 import NotFound from '../imports/ui/NotFound/NotFound.jsx';
 import Blend from '../imports/ui/Blend/Blend.jsx';
 
-import AddTracks from '../imports/ui/Blend/AddTracks/AddTracks.jsx';
+import AddTracks from '../imports/ui/Blend/AddTracks/AddTracks/AddTracks.jsx';
 import Recommended from '../imports/ui/Blend/AddTracks/Recommended/Recommended.jsx';
 import Profile from '../imports/ui/Profile/Profile.jsx';
 import FromPlaylist from '../imports/ui/Blend/AddTracks/FromPlaylist/FromPlaylist.jsx';
-import TopSongs from '../imports/ui/Blend/AddTracks/TopSongs/TopSongs.jsx';
+import TopTracks from '../imports/ui/Blend/AddTracks/TopTracks/TopTracks.jsx';
+import RemoveTracks from '../imports/ui/Blend/AddTracks/RemoveTracks/RemoveTracks.jsx';
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -64,6 +65,15 @@ FlowRouter.route('/blend/:id', {
   },
 });
 
+FlowRouter.route('/blend/:id/remove_tracks', {
+  name: 'blend-remove-tracks',
+  action(params) {
+    mount(App, {
+      main: <RemoveTracks code={params.id}/>
+    });
+  },
+});
+
 FlowRouter.route('/blend/:id/add_tracks', {
   name: 'blend-add-tracks',
   action(params) {
@@ -104,7 +114,7 @@ FlowRouter.route('/blend/:id/add_tracks/top_songs', {
   name: 'blend-add-tracks-top-songs',
   action(params) {
     mount(App, {
-      main: <TopSongs code={params.id}/>
+      main: <TopTracks code={params.id}/>
     });
   },
 });

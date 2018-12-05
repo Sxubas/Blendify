@@ -1,0 +1,9 @@
+@media only screen and (max-width: 600px) {
+  .track-item-container p{
+    font-size: 1.08rem;
+  }
+
+  .track-item-container a{
+    font-size: 0.8rem;
+  }
+}

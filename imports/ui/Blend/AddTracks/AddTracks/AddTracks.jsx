@@ -25,7 +25,7 @@ class AddTracks extends React.Component {
         <p>Which songs do you want to add to this playlist?</p>
 
         <AddingMethod title="Top songs" code={this.props.code}
-          description="Select a group of songs from your 30 most listened-to songs in spotify"
+          description="Select a group of songs from your 20 most listened-to songs in spotify"
           icon="trending_up" route="top_songs"/>
         <AddingMethod title="Custom mood" code={this.props.code}
           description="Feeling acoustic? Instrumental? Energetic? We will help you choose"

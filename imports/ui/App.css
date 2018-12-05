@@ -97,13 +97,13 @@ body, #app{
 
 html .app-container .btn {
   display: inline-block;
-  font-size: 1.2rem;
+  font-size: 1.04rem;
   font-weight: 600;
   border: 2px #1ed760 solid;
   background: #1ed760;
   color: #ffffff;
   border-radius: 24px;
-  padding: 4px 16px;
+  padding: 4px 12px;
   margin: 4px;
   transition: all 66ms linear;
   cursor: pointer;
@@ -119,11 +119,6 @@ html .app-container .btn.white{
   border: 2px transparent solid;
   background: #fff;
   color: black;
-}
-
-html .app-content-container .btn.small{
-  font-size: 1rem;
-  padding: 2px 12px
 }
 
 html .app-container .btn:hover{

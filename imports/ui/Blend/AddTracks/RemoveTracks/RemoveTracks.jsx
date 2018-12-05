@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-import './TopSongs.css';
-import './TopSongs.mobile.css';
+import './RemoveTracks.css';
+import './RemoveTracks.mobile.css';
 
-class TopSongs extends React.Component {
+class RemoveTracks extends React.Component {
 
   constructor(props) {
     super(props);
@@ -18,15 +18,15 @@ class TopSongs extends React.Component {
   render() {
     return (
       <div className='custom-mood-container'>
-        <h5>TopSongs</h5>
+        <h5>RemoveTracks</h5>
       </div>
     );
   }
 
 }
 
-TopSongs.propTypes = {
+RemoveTracks.propTypes = {
   code: PropTypes.string.isRequired
 };
 
-export default TopSongs;
+export default RemoveTracks;

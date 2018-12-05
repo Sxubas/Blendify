@@ -6,7 +6,7 @@
   align-items: flex-start;
   
   height: 100%;
-  padding: 32px;
+  padding: 16px 32px;
   margin: 0 auto;
   width: calc(100% - 2*32px);
   max-width: 1080px;
@@ -80,39 +80,6 @@ i.blend-title-image{
   margin-top: 24px;
 }
 
-.track-item-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 4px;
-  padding-bottom: 6px;
-  border-bottom: 1px rgba( 245, 245, 245, 0.1) solid;
-}
-
-.track-item-container p{
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.track-item-container .artists-container{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: -8px;
-  white-space: pre;
-}
-
-.track-item-container a{
-  font-size: 0.92rem;
-  color: rgb(194, 194, 194);
-  transition: all 0.12s ease-in-out;
-}
-
-.track-item-container a:hover{
-  color: whitesmoke;
-}
 
 .add-tracks-container{
   width: 100%;
@@ -143,12 +110,4 @@ i.blend-title-image{
   justify-content: space-between;
   width: 33%;
   margin-top: 16px;
-}
-
-.track-duration{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  height: 100%;
 }
