@@ -12,6 +12,7 @@
   border-right: 2px #1ed760 solid;
   height: calc(100% - 2*24px); /*More padding removal*/
   width: var(--desktop-nav-width);
+  z-index: 100;
 }
 
 .title-logo-container{
