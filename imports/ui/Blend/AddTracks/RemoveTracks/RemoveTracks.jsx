@@ -52,10 +52,10 @@ class RemoveTracks extends React.Component {
 
   render() {
     return (
-      <div className='custom-mood-container'>
+      <div className='remove-tracks-container'>
         <h3>Remove tracks</h3>
         <hr />
-        <p>Select the tracks to remove from the playlist</p>
+        <p className='remove-tracks-description'>Select the tracks to remove from the playlist</p>
         <TrackSelector tracks={this.spreadTracks()} removing code={this.props.code} />
       </div>
     );
