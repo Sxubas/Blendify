@@ -43,7 +43,7 @@ class BlendItem extends Component {
         </div>
 
         <div>
-          <i className='material-icons'>more_horiz</i>
+          {/* <i className='material-icons'>more_horiz</i> */}
         </div>
 
       </div>

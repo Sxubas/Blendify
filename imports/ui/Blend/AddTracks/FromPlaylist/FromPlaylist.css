@@ -10,3 +10,39 @@
   width: calc(100% - 2*32px); /*Remove padding*/
   max-width: 1080px;
 } 
+
+
+.playlist-item-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px;
+  width: calc(100% - 2*8px); /*Padding removal*/
+  border-top: 1px rgba(245, 245, 245, 0.3) solid;
+  transition: background-color 66ms ease-in-out;
+  cursor: pointer;
+}
+
+.playlist-item-content:hover{
+  background-color: rgba(71, 71, 71, 0.4);
+}
+
+.playlist-item-cover-art {
+  height: 56px;
+  width: 56px;
+  background-size: cover;
+  cursor: pointer;
+}
+
+i.playlist-cover-icon{
+  font-size: 56px;
+  cursor: pointer;
+}
+
+.playlist-item-title{
+  font-size: 1.16rem;
+  margin: 4px 0;
+  margin-left: 8px;
+  width: 100%;
+}
