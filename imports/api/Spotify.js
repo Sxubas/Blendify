@@ -6,7 +6,7 @@ const queryStr = require('querystring');
 
 const Spotify = {};
 
-Spotify.getTopTracks = (access_token, type = 'tracks', limit = 15, time_range = 'medium_term') => {
+Spotify.getTopTracksAndArtists = (access_token, type = 'tracks', limit = 15, time_range = 'medium_term') => {
   //time ranges = long (all time), medium (last ~6 months), short (last 4 weeks)
   return new Promise((resolve, reject) => {
     axios.get(`https://api.spotify.com/v1/me/top/${type}`, {
@@ -296,11 +296,12 @@ Spotify.getAvailableGenres = (access_token) => {
   });
 };
 
-Spotify.getRecommendations = (access_token, seed_genres, target_acousticness, target_danceability, target_energy, target_instrumentalness, target_popularity, target_speechiness, target_valence) => {
+Spotify.getRecommendations = (access_token, seed_artists, seed_genres, target_acousticness, target_danceability, target_energy, target_instrumentalness, target_popularity, target_speechiness, target_valence) => {
   //https://api.spotify.com/v1/recommendations
   return new Promise((resolve, reject) => {
     axios.get('https://api.spotify.com/v1/recommendations', {
       params: {
+        seed_artists,
         seed_genres,
         target_acousticness,
         target_danceability,

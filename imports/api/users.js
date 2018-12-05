@@ -15,11 +15,15 @@ Meteor.methods({
     Meteor.users.update({ 'profile.id': username }, {});
   },
   'users.getTopTracks'() {
-    console.log('entro');
     if (!Meteor.userId()) return new Meteor.Error('Unauthorized');
     if (!Meteor.isServer) return new Meteor.Error('Unauthorized');
 
-    return Spotify.getTopTracks(Meteor.user().services.spotify.accessToken);
+    return Spotify.getTopTracksAndArtists(Meteor.user().services.spotify.accessToken);
+  },
+  'users.getTopArtists'() {
+    if (!Meteor.userId()) return new Meteor.Error('Unauthorized');
+    if (!Meteor.isServer) return new Meteor.Error('Unauthorized');
+    return Spotify.getTopTracksAndArtists(Meteor.user().services.spotify.accessToken, 'artists', 5);
   },
   'users.createPlaylist'(name, description) {
     if (!Meteor.userId()) return new Meteor.Error('Unauthorized');
