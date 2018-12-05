@@ -16,8 +16,6 @@ import FromPlaylist from '../imports/ui/Blend/AddTracks/FromPlaylist/FromPlaylis
 import TopTracks from '../imports/ui/Blend/AddTracks/TopTracks/TopTracks.jsx';
 import RemoveTracks from '../imports/ui/Blend/AddTracks/RemoveTracks/RemoveTracks.jsx';
 
-import registerServiceWorker from './registerServiceWorker';
-
 //Display main.html as the served html
 import './main.html';
 import CustomMood from '../imports/ui/Blend/AddTracks/CustomMood/CustomMood.jsx';
