@@ -16,8 +16,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
-  margin-top: 16px;
 }
 
 .create-description{
@@ -30,6 +28,18 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-top: 8px;
+  font-size: 1.16rem;
+  width: 100%;
+}
+
+.create-container input{
+  width: 100%;
+  font-size: 1.24rem;
+}
+
+.create-buttons{
+  margin-top: 8px;
 }
 
 .create-container button{

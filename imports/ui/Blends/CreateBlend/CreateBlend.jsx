@@ -5,9 +5,17 @@ import './CreateBlend.css';
 
 class CreateBlend extends React.Component {
 
+  constructor(props){
+    super(props);
+
+    this.state = {
+      name: ''
+    };
+  }
+
   sumbitBlend(event){
     event.preventDefault();
-    const name = this.nameInput.value;
+    const name = this.state.name;
     const desc = this.descInput.value;
 
     //Call corrected submit method
@@ -36,17 +44,17 @@ class CreateBlend extends React.Component {
         <hr/>
         <form onSubmit={(e) => this.sumbitBlend(e)} role='form'>
           <label>
-            Nombre
-            <input type="text" maxLength="100" ref={ref => this.nameInput = ref} />
+            Name
+            <input type="text" maxLength="100" value={this.state.name} onChange={event => this.setState({name: event.target.value})} />
           </label>
 
           <label>
             Description
             <textarea className='create-description' maxLength="300" ref={ref => this.descInput = ref} />
           </label>
-          <div>
-            <button className='btn black' onClick={() => window.history.back()}>Cancel</button>
-            <button className='btn' type="submit">Create</button>            
+          <div className='create-buttons'>
+            <button className='btn black' type="button" onClick={() => history.back()}>Cancel</button>
+            <button className='btn' type="submit" disabled={this.state.name.length === 0}>Create</button>            
           </div>
         </form>
       </div>

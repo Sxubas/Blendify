@@ -33,11 +33,11 @@ class LastBlend extends React.Component {
             <i 
               className='material-icons last-blend-cover-icon'> photo</i>
           }
+        </div>
+        <div className='last-content-container'>
           <h5 id='last-blend-title'>
             {this.props.blend.name}
           </h5>
-        </div>
-        <div className='last-bottom-container'>
           <p>Code: {this.props.blend.code}</p>
           <p>{this.props.blend.tracks.length} Track{this.props.blend.tracks.length!==1 && 's'}</p>
           <p>{this.props.blend.contributors.length} Contributor{this.props.blend.contributors.length!==1 && 's'}</p>

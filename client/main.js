@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Meteor } from 'meteor/meteor';
 import { mount, withOptions } from 'react-mounter';
 import App from '../imports/ui/App.jsx';
 import Home from '../imports/ui/Home/Home.jsx';
@@ -25,6 +26,13 @@ mount = withOptions({
   rootId: 'app'
 }, mount);
 
+//Register service worker
+//Extracted from https://github.com/NitroBAY/meteor-service-worker
+Meteor.startup(() => {
+  navigator.serviceWorker.register('/sw.js')
+    .then()
+    .catch(err => console.log('ServiceWorker registration failed: ', err)); 
+});
 
 //Router will mount React app and change it's contents accordingly
 FlowRouter.route('/', {
@@ -58,7 +66,7 @@ FlowRouter.route('/blend/:id', {
   name: 'blend',
   action(params) {
     mount(App, {
-      main: <Blend code={params.id}/>
+      main: <Blend code={params.id} />
     });
   },
 });
@@ -67,7 +75,7 @@ FlowRouter.route('/blend/:id/remove_tracks', {
   name: 'blend-remove-tracks',
   action(params) {
     mount(App, {
-      main: <RemoveTracks code={params.id}/>
+      main: <RemoveTracks code={params.id} />
     });
   },
 });
@@ -76,7 +84,7 @@ FlowRouter.route('/blend/:id/add_tracks', {
   name: 'blend-add-tracks',
   action(params) {
     mount(App, {
-      main: <AddTracks code={params.id}/>
+      main: <AddTracks code={params.id} />
     });
   },
 });
@@ -85,7 +93,7 @@ FlowRouter.route('/blend/:id/add_tracks/custom_mood', {
   name: 'blend-add-tracks-custom',
   action(params) {
     mount(App, {
-      main: <CustomMood code={params.id}/>
+      main: <CustomMood code={params.id} />
     });
   },
 });
@@ -94,7 +102,7 @@ FlowRouter.route('/blend/:id/add_tracks/from_playlist', {
   name: 'blend-add-tracks-from-playlist',
   action(params) {
     mount(App, {
-      main: <FromPlaylist code={params.id}/>
+      main: <FromPlaylist code={params.id} />
     });
   },
 });
@@ -103,7 +111,7 @@ FlowRouter.route('/blend/:id/add_tracks/recommended', {
   name: 'blend-add-tracks-recommended',
   action(params) {
     mount(App, {
-      main: <Recommended code={params.id}/>
+      main: <Recommended code={params.id} />
     });
   },
 });
@@ -112,7 +120,7 @@ FlowRouter.route('/blend/:id/add_tracks/top_songs', {
   name: 'blend-add-tracks-top-songs',
   action(params) {
     mount(App, {
-      main: <TopTracks code={params.id}/>
+      main: <TopTracks code={params.id} />
     });
   },
 });

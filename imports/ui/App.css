@@ -125,6 +125,10 @@ html .app-container .btn:hover{
   transform: scale(1.06);
 }
 
+html .app-container .btn:disabled{
+  opacity: 0.64;
+}
+
 html a{
   text-decoration: none;
 }
