@@ -120,5 +120,5 @@ nav img{
 .app-content-container{
   padding-left: calc(var(--desktop-nav-width) + 48px + 2px);
   min-height: 100vh;
-  width: calc(100vw - var(--desktop-nav-width) - 48px - 2px - 18px) /*Remove navigation, scrollbar and padding and thickness*/
+  width: calc(100vw - var(--desktop-nav-width) - 48px - 2px - 19px) /*Remove navigation, scrollbar and padding and thickness*/
 }

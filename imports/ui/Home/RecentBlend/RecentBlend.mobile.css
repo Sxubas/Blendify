@@ -11,8 +11,8 @@
     background-size: cover;
   }
 
-  .blend-cover-icon{
-    font-size: 144px !important;
+  .recent-blend-container .blend-cover-icon{
+    font-size: 144px;
     box-sizing: border-box;
     height: 144px;
   }

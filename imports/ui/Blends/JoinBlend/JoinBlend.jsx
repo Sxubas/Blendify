@@ -20,7 +20,7 @@ class JoinBlend extends React.Component {
   submitJoin(event) {
     event.preventDefault();
 
-    Meteor.call('rooms.addContributor', this.state.code, (err, res) => {
+    Meteor.call('rooms.addContributor', this.state.code, (err) => {
       if (err) {
         alert(err);
         return;
@@ -46,7 +46,7 @@ class JoinBlend extends React.Component {
           />
           {this.invalidCode() && <p role='alert'>The code should have the format: XX999</p>}
           <div>
-            <button aria-label="Cancel" className='btn black' onClick={() => window.history.back()}>Cancel</button>
+            <button aria-label="Cancel" className='btn black' type="button" onClick={() => window.history.back()}>Cancel</button>
             <button aria-label="Join Blend" className='btn' type="submit" disabled={this.invalidCode()}>Join blend</button>
           </div>
         </form>

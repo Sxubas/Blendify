@@ -14,7 +14,7 @@ import './CustomMood.css';
 import './CustomMood.mobile.css';
 
 const customStyles = {
-  control: styles => ({ ...styles, backgroundColor: 'white', color: 'black', width: '100%'})
+  control: styles => ({ ...styles, backgroundColor: 'white', color: 'black', width: '100%' })
 };
 
 class CustomMood extends React.Component {
@@ -74,14 +74,14 @@ class CustomMood extends React.Component {
     this.setState(update);
   }
 
-  buildGenreString(){
+  buildGenreString() {
     let string = '';
 
-    for(const genre of this.state.selectedGenres){
+    for (const genre of this.state.selectedGenres) {
       string += genre.value + ',';
     }
 
-    string = string.substring(0, string.length-1);
+    string = string.substring(0, string.length - 1);
 
     return string;
   }
@@ -124,30 +124,6 @@ class CustomMood extends React.Component {
       <div className='custom-mood-container'>
         <h3>Custom mood</h3>
         <hr />
-
-        <p>Pick between 1 and 5 genres to search songs for</p>
-
-        <Select
-          ref={sel => this.sel = sel}
-          onChange={(option) => {
-            if(option.length <= 5)
-              this.setState({ selectedGenres: option})
-            else
-              this.sel.blur();
-          }}
-          value={this.state.selectedGenres}          
-          isMulti
-          isSearchable
-          closeMenuOnSelect={false}
-          openMenuOnClick={true}
-          openMenuOnFocus={true}
-          placeholder="Select genres"
-          styles={customStyles}
-          options={genres}
-          className="genre-multi-select"
-          classNamePrefix="select"
-        />
-
         <p>Choose and tweak which parameters do you want to query songs for</p>
 
         <MoodParameter title="Happiness"
@@ -205,6 +181,31 @@ class CustomMood extends React.Component {
           value={this.state.speechiness.value}
           onChange={(e) => this.onChangeGenerator(e, 'speechiness')}
           minLabel='Music' maxLabel='Speech' />
+        <br/>
+        <hr/>
+
+        <p>Finally, between 1 and 5 genres <b>must</b> be selected to search tracks</p>
+
+        <Select
+          ref={sel => this.sel = sel}
+          onChange={(option) => {
+            if (option.length <= 5)
+              this.setState({ selectedGenres: option })
+            else
+              this.sel.blur();
+          }}
+          value={this.state.selectedGenres}
+          isMulti
+          isSearchable
+          closeMenuOnSelect={false}
+          openMenuOnClick={true}
+          openMenuOnFocus={true}
+          placeholder="Select genres"
+          styles={customStyles}
+          options={genres}
+          className="genre-multi-select"
+          classNamePrefix="select"
+        />
 
         <div className='mood-parameter-buttons'>
           <button className='btn black' onClick={() => FlowRouter.go(`/blend/${this.props.code}/add_tracks`)}>Cancel</button>
