@@ -15,7 +15,7 @@ class CreateBlend extends React.Component {
 
   sumbitBlend(event){
     event.preventDefault();
-    const name = this.nameInput.value;
+    const name = this.state.name;
     const desc = this.descInput.value;
 
     //Call corrected submit method
@@ -44,7 +44,7 @@ class CreateBlend extends React.Component {
         <hr/>
         <form onSubmit={(e) => this.sumbitBlend(e)} role='form'>
           <label>
-            Nombre
+            Name
             <input type="text" maxLength="100" value={this.state.name} onChange={event => this.setState({name: event.target.value})} />
           </label>
 

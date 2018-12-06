@@ -38,7 +38,7 @@ class BlendItem extends Component {
               
           <div className="blend-item-text">
             <a href={`/blend/${this.props.blend.code}`} className='blend-item-title title'>{this.props.blend.name}</a >
-            <span>Owner: <a href={`/profile/${this.props.blend.owner.id}`}>{this.props.blend.owner.display_name}</a> </span>
+            <span>Owner: <a>{this.props.blend.owner.display_name}</a> </span>
           </div>
         </div>
 

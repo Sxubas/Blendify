@@ -20,7 +20,7 @@ class Profile extends Component {
               style={{ backgroundImage: `url(${this.props.user.services.spotify.images[0].url})` }}
             >
             </figure> :
-            <i className='material-icons nav-user-avatar' title={this.props.user.display_name}>
+            <i className='material-icons profile-user-avatar' title={this.props.user.display_name}>
               account_box
             </i>}
           <h3>{this.props.user.services.spotify.display_name}</h3>

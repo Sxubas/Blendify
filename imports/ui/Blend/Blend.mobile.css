@@ -13,6 +13,7 @@
 
   .blend-title-text{
     align-items: center;
+    margin-left: 0;
   }
 
   .blend-title-text h3{
@@ -28,10 +29,15 @@
     height: 24vh;
     width: 24vh;
     padding-top: 0;
+    margin-bottom: 4px;
     background-size: cover;
   }
   
   i.blend-title-image{
-    font-size: 120px;
+    height: 24vh;
+    width: 24vh;
+    font-size: 24vh;
+    margin-bottom: 4px;
+    box-shadow: inset 0 0 calc(24vh / 5) calc(24vh/5 * 2/3) whitesmoke;
   }
 }
