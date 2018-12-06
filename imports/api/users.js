@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Spotify from './Spotify';
+import {check} from 'meteor/check';
 
 if (Meteor.isServer) {
   Meteor.publish('users', id => {
@@ -7,8 +8,11 @@ if (Meteor.isServer) {
   });
 }
 
+//Andrés Felipe López: Es buena práctica hacer un check del parámetro que recibe el método, así se evitan problemas de lógica y de seguridad.
 Meteor.methods({
   'users.removeUser'(username) {
+    check(username, String);
+    
     if (!Meteor.users.findOne({ 'profile.id': username })) {
       return new Meteor.Error('The user does not exists');
     }
@@ -26,6 +30,9 @@ Meteor.methods({
     return Spotify.getTopTracksAndArtists(Meteor.user().services.spotify.accessToken, 'artists', 5);
   },
   'users.createPlaylist'(name, description) {
+    check(name, String);
+    check(description, String);
+    
     if (!Meteor.userId()) return new Meteor.Error('Unauthorized');
     if (!Meteor.isServer) return new Meteor.Error('Unauthorized');
 
