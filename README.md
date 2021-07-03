@@ -1,4 +1,6 @@
 
+//Juan Camilo Useche: Código increiblemente organizado, tal vez pudieron agregar las tecnologias utilizadas en el README.md
+
 # Blendify
 
 http://blendify.herokuapp.com
