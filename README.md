@@ -48,7 +48,8 @@ Run meteor project:
 
 Afterwards, the meteor project will be running. The app will be hosted on `localhost:3000`.
 
-  
+## Preview
+- Photo with how the proyect looks like when deployed ! :)
 
 ## Authors
 [Sergio Cárdenas](https://github.com/SeCardenas)
