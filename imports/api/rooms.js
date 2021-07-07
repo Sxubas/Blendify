@@ -2,7 +2,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import Spotify from './Spotify';
-
+//You can use the Check Method in the meteor library to up your security game, making sure parameters come as intended (String,integer,etc)
 export const Rooms = new Mongo.Collection('rooms');
 
 const makecode = () => {
